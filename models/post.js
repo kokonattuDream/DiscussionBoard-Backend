@@ -10,7 +10,8 @@ const postSchema = mongoose.Schema({
     replies: [{
         reply: {type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}
     }],
-
+    imageId: {type: String, default: ''},
+    imageVersion: {type: String, default: ''}
 });
 
 module.exports = mongoose.model('Post', postSchema);
