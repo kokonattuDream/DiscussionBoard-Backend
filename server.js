@@ -6,18 +6,10 @@ const cors = require('cors');
 const env = require("./env");
 const port = 3000;
 
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@discussion-board-cluster-e1mbo.mongodb.net/test?retryWrites=true&w=majority`;
-const client = new MongoClient(url, { useUnifiedTopology: true });
 
-client.connect(function(err) {
-   if(err){
-      console.log(err);
-   }
-   console.log("Connected successfully to server");
-   //const collection = client.db(env.dev.db.dbName).collection(env.dev.db.collection);
-   client.close();
- });
+mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
