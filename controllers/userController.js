@@ -21,7 +21,7 @@ exports.createUser = (req, res, next) => {
 }
 
 exports.loginUser = (req, res, next) => {
-
+    console.log(req);
     if(!req.body.username || !req.body.password === undefined){
         return res.status(200).json({error: 'Cannot submit empty fields'});
     }

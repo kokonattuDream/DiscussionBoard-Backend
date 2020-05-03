@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@discussion-board-cluster-e1mbo.mongodb.net/test?retryWrites=true&w=majority`;
 const postRoute = require('./routes/postRoute');
+const userRoute = require('./routes/userRoute');
 const passport = require('./passport/passport-local');
 
 
@@ -37,6 +38,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(userRoute);
 app.use(postRoute);
 
 app.listen(3000, () => {
