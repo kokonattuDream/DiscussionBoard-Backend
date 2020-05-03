@@ -9,10 +9,16 @@ exports.createPost = async(req, res) => {
     console.log(req.body);
 
     try{
+
+        let user = await User.findOne({'username': req.body.username});
         
+        if(!user){
+            res.status(404).send("username not found!");
+        }
+
         let newPost = Post({
             title: req.body.title,
-            author: req.body.author,
+            user: user,
             create_date: new Date(),
             updated_date: new Date(),
             category: req.body.category,
