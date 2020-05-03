@@ -1,18 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const app= express();
 const cors = require('cors');
 const env = require("./env");
-const port = 3000;
-
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 const mongoose = require('mongoose');
 const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@discussion-board-cluster-e1mbo.mongodb.net/test?retryWrites=true&w=majority`;
-
 const postRoute = require('./routes/postRoute');
+const passport = require('./passport/passport-local');
 
 
 mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
-
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -23,9 +23,19 @@ app.use((req, res, next) => {
    next();
 });
 
-app.use(express.static('public'));
+app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
+
+app.use(session({
+   secret: 'thisisasecretkey',
+   resave: false,
+   saveUninitialized: false,
+   store: new MongoStore({mongooseConnection: mongoose.connection})
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(postRoute);
 
