@@ -8,7 +8,7 @@ const postSchema = mongoose.Schema({
     category: {type: String, required: true},
     region: {type: String, required: true},
     replies: [{
-        reply: {type: mongoose.Schema.Type.ObjectId, ref: 'Reply'}
+        reply: {type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}
     }],
 
 });
