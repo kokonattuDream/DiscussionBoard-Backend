@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const User = require('../models/user');
 const cloudinary = require('cloudinary');
 const env = require('../env');
 
@@ -46,8 +47,8 @@ exports.createPost = async(req, res) => {
 exports.getAllPosts = async (req, res) => {
     try{
 
-        let all_posts = await Post.find();
-
+        let all_posts = await Post.find().populate("user","username").sort({updated_date: -1});
+    
         return res.status(200).json({posts: all_posts});
     } catch (err){
         console.log('Error: ' + err);
