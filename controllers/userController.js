@@ -2,7 +2,7 @@ const passport = require('passport');
 const User = require('../models/user');
 
 exports.createUser = (req, res, next) => {
-
+    console.log(req.body);
     if(!req.body.username || !req.body.password){
         return res.status(200).json({error: 'Cannot submit empty fields'});
     }
@@ -15,13 +15,17 @@ exports.createUser = (req, res, next) => {
         if(info){
             return res.status(200).json({error: info});
         }
-
+        let res_user = {
+            username: user.username,
+            posts: user.posts,
+            replies: user.replies
+        };
         return res.status(201).json({message: 'User successfully created', user: user});
     })(req, res, next);
 }
 
 exports.loginUser = (req, res, next) => {
-    //console.log(req);
+    console.log(req.body);
     if(!req.body.username || !req.body.password === undefined){
         return res.status(200).json({error: 'Cannot submit empty fields'});
     }
@@ -35,6 +39,12 @@ exports.loginUser = (req, res, next) => {
             return res.status(200).json({error: info});
         }
 
-        return res.status(200).json({message: 'User successfully logined', user: user});
+        let res_user = {
+            username: user.username,
+            posts: user.posts,
+            replies: user.replies
+        };
+
+        return res.status(200).json({message: 'User successfully logined', user: res_user});
     })(req, res, next);
 }
