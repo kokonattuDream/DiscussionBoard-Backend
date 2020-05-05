@@ -34,6 +34,10 @@ exports.createPost = async(req, res) => {
         }
         
         await newPost.save();
+        
+        user.posts.push(newPost);
+
+        await user.save();
 
         return res.status(200).json({message: 'Post created successfully'});
 
