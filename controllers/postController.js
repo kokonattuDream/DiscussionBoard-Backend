@@ -38,7 +38,7 @@ exports.createPost = async (req, res) => {
     console.log(user);
     await user.save();
 
-    return res.status(200).json({ message: "Post created successfully" });
+    res.status(200).json({ message: "Post created successfully" });
   } catch (err) {
     console.error("Error: " + err);
     res.status(500).send(err);
@@ -66,11 +66,16 @@ exports.getPost = async(req, res) => {
             res.status(400).send("No Post id");
         }
         let post = await Post.findById(req.params.id);
-
+        
         if(!post){
-            res.status(404).send("Post not found");
+          res.status(404).send("Post not found");
+        } else {
+          let user = await User.findById(post.user);
+          post.user = user;
+          post.user.password = null;
+          res.status(200).json({ post: post });
         }
-        return res.status(200).json({ post: post });
+      
     } catch (error){
         console.log("Error: " + error);
         res.status(500).send(error);
