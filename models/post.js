@@ -7,6 +7,7 @@ const postSchema = mongoose.Schema({
     updated_date: {type: Date, required: true},
     category: {type: String, required: true},
     region: {type: String, required: true},
+    text: {type:String},
     replies: [{
         reply: {type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}
     }],

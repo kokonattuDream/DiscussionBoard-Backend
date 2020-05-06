@@ -10,14 +10,15 @@ exports.createPost = async (req, res) => {
 
   try {
     let user = await User.findOne({ username: req.body.username });
-
+    console.log(user);
     if (!user) {
       res.status(404).send("username not found!");
     }
-    
+
     let newPost = Post({
       title: req.body.title,
       user: user,
+      text: req.body.text,
       create_date: new Date(),
       updated_date: new Date(),
       category: req.body.category,
@@ -30,16 +31,16 @@ exports.createPost = async (req, res) => {
       newPost.imageId = result.public_id;
       newPost.imageVersion = result.version;
     }
-
+    console.log(newPost);
     await newPost.save();
 
     user.posts.push(newPost);
-
+    console.log(user);
     await user.save();
 
     return res.status(200).json({ message: "Post created successfully" });
   } catch (err) {
-    console.log("Error: " + err);
+    console.error("Error: " + err);
     res.status(500).send(err);
   }
 };

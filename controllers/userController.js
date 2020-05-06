@@ -9,6 +9,7 @@ exports.createUser = (req, res, next) => {
 
     passport.authenticate('local-signup', (err, user, info) =>{
         if(err){
+            console.error(err);
             return res.status(200).json({error: err});
         }
 
@@ -32,6 +33,7 @@ exports.loginUser = (req, res, next) => {
     
     passport.authenticate('local-login', (err, user, info) =>{
         if(err){
+            console.error(err);
             return res.status(200).json({error: err});
         }
 
