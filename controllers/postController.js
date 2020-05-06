@@ -58,4 +58,21 @@ exports.getAllPosts = async (req, res) => {
   }
 };
 
-exports.addReply = async (req, res) => {};
+exports.getPost = async(req, res) => {
+    try {
+        console.log(req.params.id);
+        if(!req.params.id){
+            console.log("No Post id");
+            res.status(400).send("No Post id");
+        }
+        let post = await Post.findById(req.params.id);
+
+        if(!post){
+            res.status(404).send("Post not found");
+        }
+        return res.status(200).json({ post: post });
+    } catch (error){
+        console.log("Error: " + error);
+        res.status(500).send(error);
+    }
+}
