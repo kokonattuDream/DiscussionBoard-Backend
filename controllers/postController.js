@@ -1,5 +1,6 @@
 const Post = require("../models/post");
 const User = require("../models/user");
+const Reply = require("../models/reply");
 const cloudinary = require("cloudinary");
 const env = require("../env");
 
@@ -65,14 +66,15 @@ exports.getPost = async(req, res) => {
             console.log("No Post id");
             res.status(400).send("No Post id");
         }
-        let post = await Post.findById(req.params.id);
-        
+        let post = await Post.findOne({_id: req.params.id})
+          .populate("user", "username")
+          .populate("reply", ["user","text", "date"]);
+          
+        console.log(post);
+
         if(!post){
           res.status(404).send("Post not found");
         } else {
-          let user = await User.findById(post.user);
-          post.user = user;
-          post.user.password = null;
           res.status(200).json({ post: post });
         }
       
