@@ -18,13 +18,12 @@ exports.createPost = async (req, res) => {
 
     let newPost = Post({
       title: req.body.title,
-      user: user,
+      user: user._id,
       text: req.body.text,
       create_date: new Date(),
       updated_date: new Date(),
       category: req.body.category,
-      region: req.body.region,
-      replies: [],
+      region: req.body.region
     });
 
     if (req.body.image) {
@@ -34,11 +33,8 @@ exports.createPost = async (req, res) => {
     }
     console.log(newPost);
     await newPost.save();
-
-    user.posts.push(newPost);
-    console.log(user);
-    await user.save();
-
+    user.posts.push(newPost._id);
+    user.save();
     res.status(200).json({ message: "Post created successfully" });
   } catch (err) {
     console.error("Error: " + err);
@@ -61,16 +57,18 @@ exports.getAllPosts = async (req, res) => {
 
 exports.getPost = async(req, res) => {
     try {
-        console.log(req.params.id);
         if(!req.params.id){
             console.log("No Post id");
             res.status(400).send("No Post id");
         }
         let post = await Post.findOne({_id: req.params.id})
           .populate("user", "username")
-          .populate("reply", ["user","text", "date"]);
-          
-        console.log(post);
+          .populate({
+            path:'replies',
+            populate: { path: "user", select:"username" }
+          });
+        
+        console.log(post.replies[0].user);
 
         if(!post){
           res.status(404).send("Post not found");
