@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@discussion-board-cluster-e1mbo.mongodb.net/test?retryWrites=true&w=majority`;
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
+const replyRoute = require('./routes/replyRoute');
 const passport = require('./lib/passport-local');
 
 
@@ -41,6 +42,7 @@ app.use(passport.session());
 
 app.use(userRoute);
 app.use(postRoute);
+app.use(replyRoute);
 
 app.listen(3000, () => {
    console.log("server running on port 3000");

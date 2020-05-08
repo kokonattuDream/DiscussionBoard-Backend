@@ -1,8 +1,9 @@
 const mongoose = require('mongoose');
 
 const replySchema = mongoose.Schema({
-    author: {type: String},
-    content: {type: String},
+    user: {type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    text: {type: String},
+    post:  {type: mongoose.Schema.Types.ObjectId, ref: 'Post'},
     date: {type: Date}
 });
 
