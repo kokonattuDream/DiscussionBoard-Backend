@@ -1,10 +1,8 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const Reply = require("../models/reply");
-const cloudinary = require("cloudinary");
 const env = require("../env");
 
-cloudinary.config(env.dev.image_src);
 
 exports.createPost = async (req, res) => {
   console.log(req.body);
@@ -26,11 +24,6 @@ exports.createPost = async (req, res) => {
       region: req.body.region
     });
 
-    if (req.body.image) {
-      let result = cloudinary.uploader.upload(req.body.image);
-      newPost.imageId = result.public_id;
-      newPost.imageVersion = result.version;
-    }
     console.log(newPost);
     await newPost.save();
     user.posts.push(newPost._id);

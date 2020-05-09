@@ -8,9 +8,7 @@ const postSchema = mongoose.Schema({
     category: {type: String, required: true},
     region: {type: String, required: true},
     text: {type:String},
-    replies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}],
-    imageId: {type: String, default: ''},
-    imageVersion: {type: String, default: ''}
+    replies: [{type: mongoose.Schema.Types.ObjectId, ref: 'Reply'}]
 });
 
 module.exports = mongoose.model('Post', postSchema);
