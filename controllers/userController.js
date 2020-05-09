@@ -21,7 +21,8 @@ exports.createUser = (req, res, next) => {
             posts: user.posts,
             replies: user.replies
         };
-        return res.status(201).json({message: 'User successfully created', user: user});
+        console.log(res_user);
+        return res.status(201).json({message: 'User successfully created', user: res_user});
     })(req, res, next);
 }
 
