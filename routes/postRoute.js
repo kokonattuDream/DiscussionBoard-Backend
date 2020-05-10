@@ -4,7 +4,6 @@ const postController = require('../controllers/postController');
 const multer  = require('multer')
 const cloudinary = require("cloudinary");
 const env = require("../env");
-const upload = multer({ dest: 'uploads/' });
 const cloudinaryStorage = require('multer-storage-cloudinary');
 
 cloudinary.config(env.dev.image_src);

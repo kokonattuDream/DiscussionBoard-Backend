@@ -15,10 +15,7 @@ const passport = require('./lib/passport-local');
 
 mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
-/** 
-app.use(fileUpload({
-   createParentPath: true
-}));*/
+
 app.use(cors());
 
 app.use((req, res, next) => {
