@@ -13,9 +13,12 @@ const userRoute = require('./routes/userRoute');
 const replyRoute = require('./routes/replyRoute');
 const passport = require('./lib/passport-local');
 
-
 mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
+/** 
+app.use(fileUpload({
+   createParentPath: true
+}));*/
 app.use(cors());
 
 app.use((req, res, next) => {
@@ -25,7 +28,6 @@ app.use((req, res, next) => {
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    next();
 });
-
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
