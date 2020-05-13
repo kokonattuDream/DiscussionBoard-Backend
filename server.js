@@ -5,7 +5,11 @@ const app= express();
 const cors = require('cors');
 const env = require("./env");
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
+/** 
+const redis   = require("redis");
+const redisStore = require('connect-redis')(session);
+const client  = redis.createClient();
+**/
 const mongoose = require('mongoose');
 const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@discussion-board-cluster-e1mbo.mongodb.net/test?retryWrites=true&w=majority`;
 const postRoute = require('./routes/postRoute');
@@ -33,9 +37,9 @@ app.use(session({
    secret: 'thisisasecretkey',
    resave: false,
    saveUninitialized: false,
-   store: new MongoStore({mongooseConnection: mongoose.connection})
-}));*/
-
+   store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260})
+}));
+*/
 app.use(passport.initialize());
 app.use(passport.session());
 

@@ -43,6 +43,7 @@ exports.createPost = async (req, res) => {
 };
 
 exports.getAllPosts = async (req, res) => {
+  console.log(req.session.key);
   try {
     let all_posts = await Post.find()
       .populate("user", "username")
