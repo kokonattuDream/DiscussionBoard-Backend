@@ -19,12 +19,12 @@ exports.createUser = (req, res, next) => {
         let res_user = {
             username: user.username
         };
+        req.session.user = user;
         return res.status(201).json({message: 'User successfully created', user: res_user});
     })(req, res, next);
 }
 
 exports.loginUser = async (req, res, next) => {
-    console.log(req.body);
     if(!req.body.username || !req.body.password === undefined){
         return res.status(200).json({error: 'Cannot submit empty fields'});
     }
@@ -42,16 +42,15 @@ exports.loginUser = async (req, res, next) => {
         let res_user = {
             username: user.username
         };
-
+        req.session.user = user;
         return res.status(200).json({message: 'User successfully logined', user: res_user});
-        
-        
     })(req, res, next);
 }
 
 exports.logoutUser = (req, res) =>{
-    res.status(200).json({message: 'User successfully log out'});
-    /** 
+   
+    //res.status(200).json({message: 'User successfully log out'});
+    
     req.session.destroy(function(err){
         if(err){
             console.log(err);
@@ -59,5 +58,5 @@ exports.logoutUser = (req, res) =>{
         } else {
             res.status(200).json({message: 'User successfully log out'});
         }
-    });*/
+    });
 }

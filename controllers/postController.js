@@ -6,36 +6,39 @@ const formidable = require('express-formidable');
 
 exports.createPost = async (req, res) => {
   console.log(JSON.parse(req.body.data));
-  console.log(req.file);
   try {
-    let data = JSON.parse(req.body.data);
-    let user = await User.findOne({ username: data.username });
-    console.log(user);
-    if (!user) {
-      res.status(404).send("username not found!");
-    }
-    
-    let newPost = Post({
-      title: data.title,
-      user: user._id,
-      text: data.text,
-      create_date: new Date(),
-      updated_date: new Date(),
-      category: data.category,
-      region: data.region
-    });
+    if(req.session.user){
+      let data = JSON.parse(req.body.data);
+      let user = await User.findOne({ username: data.username });
+      console.log(user);
+      if (!user) {
+        res.status(404).send("username not found!");
+      }
+      
+      let newPost = Post({
+        title: data.title,
+        user: user._id,
+        text: data.text,
+        create_date: new Date(),
+        updated_date: new Date(),
+        category: data.category,
+        region: data.region
+      });
 
-    if (req.file) {
-      newPost.imageId = req.file.public_id;
-      newPost.imageUrl = req.file.url;
-    }
+      if (req.file) {
+        newPost.imageId = req.file.public_id;
+        newPost.imageUrl = req.file.url;
+      }
 
-    console.log(newPost);
-    await newPost.save();
-    user.posts.push(newPost._id);
-    user.save();
-    
-    res.status(200).json({ message: "Post created successfully" });
+      console.log(newPost);
+      await newPost.save();
+      user.posts.push(newPost._id);
+      user.save();
+      
+      res.status(200).json({ message: "Post created successfully" });
+    } else {
+      res.status(403).json({ message: "Login Required" });
+    }
   } catch (err) {
     console.error("Error: " + err);
     res.status(500).send(err);
@@ -43,7 +46,6 @@ exports.createPost = async (req, res) => {
 };
 
 exports.getAllPosts = async (req, res) => {
-  console.log(req.session.key);
   try {
     let all_posts = await Post.find()
       .populate("user", "username")

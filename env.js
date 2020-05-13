@@ -9,6 +9,9 @@ const dev = {
         cloud_name: 'boardfiles',
         api_key: '334986354856358',
         api_secret: 'pao8wQZqgyyYsZBnEQyiAJXXANQ'
+    },
+    fronend:{
+        api:"http://localhost:8080"
     }
 }
 module.exports ={

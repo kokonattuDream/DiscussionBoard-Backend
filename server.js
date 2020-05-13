@@ -4,12 +4,7 @@ const cookieParser = require('cookie-parser');
 const app= express();
 const cors = require('cors');
 const env = require("./env");
-const session = require('express-session');
-/** 
-const redis   = require("redis");
-const redisStore = require('connect-redis')(session);
-const client  = redis.createClient();
-**/
+
 const mongoose = require('mongoose');
 const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@discussion-board-cluster-e1mbo.mongodb.net/test?retryWrites=true&w=majority`;
 const postRoute = require('./routes/postRoute');
@@ -20,10 +15,14 @@ const passport = require('./lib/passport-local');
 mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
 
-app.use(cors());
+app.use(cors({
+   origin: env.dev.fronend.api,
+   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+   credentials: true
+}))
 
 app.use((req, res, next) => {
-   res.header("Access-Control-Allow-Origin", "*");
+   res.header("Access-Control-Allow-Origin", env.dev.fronend.api);
    res.header("Access-Control-Allow-Credentials", "true");
    res.header("Access-Control-Allow-Methods", "GET", "POST", "DELETE", "PUT");
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -32,17 +31,11 @@ app.use((req, res, next) => {
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
-/** 
-app.use(session({
-   secret: 'thisisasecretkey',
-   resave: false,
-   saveUninitialized: false,
-   store: new redisStore({ host: 'localhost', port: 6379, client: client,ttl :  260})
-}));
-*/
+
 app.use(passport.initialize());
 app.use(passport.session());
-
+const sessionMiddleware = require('./middleware/sessionMiddleware');
+app.use(sessionMiddleware);
 app.use(userRoute);
 app.use(postRoute);
 app.use(replyRoute);
