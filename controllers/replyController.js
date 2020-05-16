@@ -21,9 +21,6 @@ exports.addReply = async (req, res) => {
         });
 
         await newReply.save();
-        user.replies.push(newReply._id);
-        await user.save();
-        console.log("user success");
         post.replies.push(newReply._id);
         await post.save();
         console.log("post success");
