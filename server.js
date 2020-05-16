@@ -40,6 +40,7 @@ app.use(userRoute);
 app.use(postRoute);
 app.use(replyRoute);
 
-app.listen(3000, () => {
+let serverPort = 3000;
+app.listen(process.env.PORT || serverPort, () => {
    console.log("server running on port 3000");
 });
