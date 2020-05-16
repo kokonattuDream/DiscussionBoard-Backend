@@ -11,7 +11,7 @@ const dev = {
         api_secret: 'pao8wQZqgyyYsZBnEQyiAJXXANQ'
     },
     fronend:{
-        api:"http://localhost:8080"
+        api:"https://discussion-board-front-end.herokuapp.com/"
     }
 }
 module.exports ={
