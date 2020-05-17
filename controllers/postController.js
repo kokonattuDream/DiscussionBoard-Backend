@@ -99,6 +99,7 @@ exports.getPost = async(req, res) => {
           if(!post){
             res.status(404).send("Post not found");
           } else {
+            Cache.set(JSON.stringify(post._id), post);
             res.status(200).json({ post: post });
           }
         }
