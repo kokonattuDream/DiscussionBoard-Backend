@@ -36,7 +36,6 @@ exports.addReply = async (req, res) => {
         if(postCache){
           postCache.updated_date = post.updated_date;
           postCache.replies.push(replyCache);
-          console.log(postCache);
           Cache.set(req.body.post, postCache);
         }
         
