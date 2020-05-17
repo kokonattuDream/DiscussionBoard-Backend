@@ -53,8 +53,6 @@ exports.getAllPosts = async (req, res) => {
       await Promise.all(all_posts.map(post =>{
           Cache.set(JSON.stringify(post._id), post);
       }));
-
-      
     } else {
       all_posts = [];
 
@@ -85,19 +83,25 @@ exports.getPost = async(req, res) => {
             console.log("No Post id");
             res.status(400).send("No Post id");
         }
-        let post = await Post.findOne({_id: req.params.id})
+        let post = null;
+
+        post = Cache.get(req.params.id);
+        if(post){
+          res.status(200).json({ post: post });
+        } else {
+          post = await Post.findOne({_id: req.params.id})
           .populate("user", "username")
           .populate({
             path:'replies',
             populate: { path: "user", select:"username" }
           });
 
-        if(!post){
-          res.status(404).send("Post not found");
-        } else {
-          res.status(200).json({ post: post });
+          if(!post){
+            res.status(404).send("Post not found");
+          } else {
+            res.status(200).json({ post: post });
+          }
         }
-      
     } catch (error){
         console.log("Error: " + error);
         res.status(500).send(error);
