@@ -30,7 +30,9 @@ exports.createPost = async (req, res) => {
       post_json.user = {
         username: req.session.user.username
       };
-
+      post_json.create_date = newPost.create_date;
+      post_json.updated_date = newPost.updated_date;
+      
       Cache.set(JSON.stringify(post_json._id), post_json);
       
       res.status(200).json({ message: "Post created successfully" });
@@ -70,6 +72,7 @@ exports.getAllPosts = async (req, res) => {
           return 0;
         }
       });
+      console.log(all_posts);
     }
     res.status(200).json({ posts: all_posts });
   } catch (err) {
