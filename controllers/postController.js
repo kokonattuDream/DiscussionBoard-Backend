@@ -4,12 +4,10 @@ const Reply = require("../models/reply");
 const Cache = require("../lib/cache");
 
 exports.createPost = async (req, res) => {
-  console.log(JSON.parse(req.body.data));
   try {
     if(req.session.user){
       let data = JSON.parse(req.body.data);
       let user = await User.findOne({ username: data.username });
-      console.log(user);
       if (!user) {
         res.status(404).send("username not found!");
       }
@@ -30,7 +28,15 @@ exports.createPost = async (req, res) => {
       }
 
       console.log(newPost);
-      await newPost.save();
+      let post_with_id = await newPost.save();
+      let post_json = JSON.parse(JSON.stringify(post_with_id));
+    
+      post_json.user = {
+        username: user.username,
+        _id: user._id
+      };
+
+      Cache.set(JSON.stringify(post_json._id), post_json);
       
       res.status(200).json({ message: "Post created successfully" });
     } else {
