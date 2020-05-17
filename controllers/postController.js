@@ -7,14 +7,10 @@ exports.createPost = async (req, res) => {
   try {
     if(req.session.user){
       let data = JSON.parse(req.body.data);
-      let user = await User.findOne({ username: data.username });
-      if (!user) {
-        res.status(404).send("username not found!");
-      }
       
       let newPost = Post({
         title: data.title,
-        user: user._id,
+        user: req.session.user._id,
         text: data.text,
         create_date: new Date(),
         updated_date: new Date(),
@@ -32,8 +28,7 @@ exports.createPost = async (req, res) => {
       let post_json = JSON.parse(JSON.stringify(post_with_id));
     
       post_json.user = {
-        username: user.username,
-        _id: user._id
+        username: req.session.user.username
       };
 
       Cache.set(JSON.stringify(post_json._id), post_json);
@@ -86,7 +81,7 @@ exports.getAllPosts = async (req, res) => {
 exports.getPost = async(req, res) => {
     try {
         if(!req.params.id){
-            console.log("No Post id");
+            console.error("No Post id");
             res.status(400).send("No Post id");
         }
         let post = null;

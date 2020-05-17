@@ -2,7 +2,6 @@ const passport = require('passport');
 const User = require('../models/user');
 
 exports.createUser = (req, res, next) => {
-    console.log(req.body);
     if(!req.body.username || !req.body.password){
         return res.status(200).json({error: 'Cannot submit empty fields'});
     }
