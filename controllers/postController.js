@@ -1,8 +1,7 @@
 const Post = require("../models/post");
 const User = require("../models/user");
 const Reply = require("../models/reply");
-const env = require("../env");
-const formidable = require('express-formidable');
+const Cache = require("../lib/cache");
 
 exports.createPost = async (req, res) => {
   console.log(JSON.parse(req.body.data));
@@ -45,11 +44,35 @@ exports.createPost = async (req, res) => {
 
 exports.getAllPosts = async (req, res) => {
   try {
-    let all_posts = await Post.find()
-      .populate("user", "username")
-      .sort({ updated_date: -1 });
+    let all_posts;
+    if(Object.keys(Cache.data).length === 0){
+      all_posts = await Post.find()
+        .populate("user", "username")
+        .sort({ updated_date: -1 });
+      
+      await Promise.all(all_posts.map(post =>{
+          Cache.set(JSON.stringify(post._id), post);
+      }));
 
-    return res.status(200).json({ posts: all_posts });
+      
+    } else {
+      all_posts = [];
+
+      await Promise.all(Object.keys(Cache.data).map(key =>{
+        all_posts.push(Cache.get(key));
+      }));
+
+      all_posts.sort((x,y)=>{
+        if(x.updated_date < y.updated_date){
+          return 1;
+        } else if(x.updated_date > y.updated_date){
+          return -1;
+        } else {
+          return 0;
+        }
+      });
+    }
+    res.status(200).json({ posts: all_posts });
   } catch (err) {
     console.log("Error: " + err);
     res.status(500).send(err);
