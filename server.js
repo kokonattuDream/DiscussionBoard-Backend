@@ -6,7 +6,7 @@ const cors = require('cors');
 const env = require("./env");
 
 const mongoose = require('mongoose');
-const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@discussion-board-cluster-e1mbo.mongodb.net/test?retryWrites=true&w=majority`;
+const url = `mongodb+srv://${env.dev.db.user}:${env.dev.db.password}@cluster0-wup3f.mongodb.net/test?retryWrites=true&w=majority`;
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
 const replyRoute = require('./routes/replyRoute');
