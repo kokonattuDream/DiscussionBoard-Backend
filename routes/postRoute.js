@@ -6,7 +6,7 @@ const sessionMiddleware = require('../middleware/sessionMiddleware');
 
 router.get('/posts', postController.getAllPosts);
 router.post('/posts', imageParser.single('file'), postController.createPost);
-router.get('/post/:id', postController.getPost);
+router.get('/posts/:id', postController.getPost);
 
 module.exports = router;
 
