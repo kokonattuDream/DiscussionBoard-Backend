@@ -9,7 +9,9 @@ dotenv.config();
 const db_user = process.env.DB_USER;
 const db_password = process.env.DB_PASSWORD;
 const frontend_api = process.env.FRONT_END_API;
-
+console.log(frontend_api);
+console.log(db_user);
+console.log(db_password);
 const mongoose = require('mongoose');
 const url = `mongodb+srv://${db_user}:${db_password}@cluster0-wup3f.mongodb.net/test?retryWrites=true&w=majority`;
 const postRoute = require('./routes/postRoute');
