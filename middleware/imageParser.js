@@ -3,13 +3,13 @@ const cloudinary = require("cloudinary");
 const dotenv = require('dotenv');
 dotenv.config();
 const image_src = {
-  cloud_name: process.env.IMG_CLOUD_NAME || env.dev.image_src.cloud_name,
-  api_key: process.env.IMG_API_KEY || env.dev.image_src.api_key,
-  api_secret: process.env.IMG_API_SECRET || env.dev.image_src.api_secret
+  cloud_name: process.env.IMG_CLOUD_NAME,
+  api_key: process.env.IMG_API_KEY,
+  api_secret: process.env.IMG_API_SECRET
 }
 const cloudinaryStorage = require('multer-storage-cloudinary');
 
-cloudinary.config(env.dev.image_src);
+cloudinary.config(image_src);
 const imageParser = multer({ 
     storage: cloudinaryStorage({
       cloudinary: cloudinary,
