@@ -1,6 +1,7 @@
 const multer  = require('multer')
 const cloudinary = require("cloudinary");
-const env = require("../env");
+const dotenv = require('dotenv');
+dotenv.config();
 const image_src = {
   cloud_name: process.env.IMG_CLOUD_NAME || env.dev.image_src.cloud_name,
   api_key: process.env.IMG_API_KEY || env.dev.image_src.api_key,

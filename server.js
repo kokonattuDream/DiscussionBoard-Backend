@@ -4,10 +4,11 @@ const cookieParser = require('cookie-parser');
 const app= express();
 const cors = require('cors');
 
-const env = require("./env");
-const db_user = process.env.DB_USER || env.dev.db.user;
-const db_password = process.env.DB_PASSWORD || env.dev.db.password;
-const frontend_api = process.env.FRONT_END_API || env.dev.fronend.api;
+const dotenv = require('dotenv');
+dotenv.config();
+const db_user = process.env.DB_USER;
+const db_password = process.env.DB_PASSWORD;
+const frontend_api = process.env.FRONT_END_API;
 
 const mongoose = require('mongoose');
 const url = `mongodb+srv://${db_user}:${db_password}@cluster0-wup3f.mongodb.net/test?retryWrites=true&w=majority`;
