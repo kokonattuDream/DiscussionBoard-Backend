@@ -14,7 +14,8 @@ exports.addReply = async (req, res) => {
         let newReply = Reply({
           user: req.session.user._id,
           text: req.body.reply,
-          date: new Date()
+          date: new Date(),
+          post: post._id
         });
 
         await newReply.save();
