@@ -7,14 +7,9 @@ exports.addReply = async (req, res) => {
     console.log(req.body);
     try {
       if(req.session.user){
-        /** 
-        let user = await User.findOne({ username: req.body.user });
-        console.log(user);
-        if (!user) {
-          res.status(404).send("username not found!");
-        }*/
 
         let post = await Post.findById(req.body.post);
+        let userModel = await User.findOne({username: req.session.user.username});
         
         let newReply = Reply({
           user: req.session.user._id,
@@ -25,7 +20,9 @@ exports.addReply = async (req, res) => {
         await newReply.save();
         post.replies.push(newReply._id);
         post.updated_date = newReply.date;
+        userModel.myReplies.push(newReply._id);
 
+        userModel.save();
         await post.save();
         
         let replyCache = JSON.parse(JSON.stringify(newReply));

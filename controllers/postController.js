@@ -7,7 +7,7 @@ exports.createPost = async (req, res) => {
   try {
     if(req.session.user){
       let data = JSON.parse(req.body.data);
-      
+      let userModel = await User.findOne({username: req.session.user.username});
       let newPost = Post({
         title: data.title,
         user: req.session.user._id,
@@ -26,7 +26,10 @@ exports.createPost = async (req, res) => {
       console.log(newPost);
       let post_with_id = await newPost.save();
       let post_json = JSON.parse(JSON.stringify(post_with_id));
-    
+
+      userModel.myPosts.push(post_with_id._id);
+      userModel.save();
+      
       post_json.user = {
         username: req.session.user.username
       };
