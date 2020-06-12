@@ -3,17 +3,17 @@ const User = require('../models/user');
 
 exports.createUser = (req, res, next) => {
     if(!req.body.username || !req.body.password){
-        return res.status(200).json({error: 'Cannot submit empty fields'});
+        return res.status(400).json({error: 'Cannot submit empty fields'});
     }
 
     passport.authenticate('local-signup', (err, user, info) =>{
         if(err){
             console.error(err);
-            return res.status(200).json({error: err});
+            return res.status(500).json({error: err});
         }
 
         if(info){
-            return res.status(200).json({error: info});
+            return res.status(500).json({error: info});
         }
         let res_user = {
             username: user.username
@@ -25,17 +25,17 @@ exports.createUser = (req, res, next) => {
 
 exports.loginUser = async (req, res, next) => {
     if(!req.body.username || !req.body.password === undefined){
-        return res.status(200).json({error: 'Cannot submit empty fields'});
+        return res.status(400).json({error: 'Cannot submit empty fields'});
     }
     
     passport.authenticate('local-login', (err, user, info) =>{
         if(err){
             console.error(err);
-            return res.status(200).json({error: err});
+            return res.status(500).json({error: err});
         }
 
         if(info){
-            return res.status(200).json({error: info});
+            return res.status(500).json({error: info});
         }
 
         let res_user = {
@@ -55,7 +55,7 @@ exports.logoutUser = (req, res) =>{
             console.log(err);
             res.status(500).json({message: 'User log out failed'});
         } else {
-            res.status(200).json({message: 'User successfully log out'});
+            res.status(204).json({message: 'User successfully log out'});
         }
     });
 }
