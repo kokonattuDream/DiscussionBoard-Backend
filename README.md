@@ -104,9 +104,9 @@ File includes jpg, png, gif files
 - data
 ```json
 {
-  "title": "Beautiful house"
-  "text": "This is a beautiful house!!!"
-  "category": "Life"
+  "title": "Beautiful house",
+  "text": "This is a beautiful house!!!",
+  "category": "Life",
   "region": "Montreal"
   }
 ```
@@ -129,8 +129,8 @@ Reply to a post
 ### Request Body
 ```json
 {
-  "user": "john"
-  "reply": "Hello!"
+  "user": "john",
+  "reply": "Hello!",
   "post": "12432422"
   }
 ```
@@ -153,8 +153,8 @@ Register a new user
 ### Request Body
 ```json
 {
-  "username": "john"
-  "password": "wefafaeef"
+  "username": "john",
+  "password": "wefafaeef",
   "confirm_password": "wefafaeef"
   }
 ```
@@ -171,7 +171,7 @@ Log in a user
 ### Request Body
 ```json
 {
-  "username": "john"
+  "username": "john",
   "password": "wefafaeef"
   }
 ```
