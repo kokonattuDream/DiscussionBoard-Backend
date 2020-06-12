@@ -104,10 +104,10 @@ File includes jpg, png, gif files
 - data
 ```json
 {
-  title: "Beautiful house"
-  text: "This is a beautiful house!!!"
-  category: "Life"
-  region: "Montreal"
+  "title": "Beautiful house"
+  "text": "This is a beautiful house!!!"
+  "category": "Life"
+  "region": "Montreal"
   }
 ```
 #### requirements
@@ -129,9 +129,9 @@ Reply to a post
 ### Request Body
 ```json
 {
-  user: "john"
-  reply: "Hello!"
-  post: "12432422"
+  "user": "john"
+  "reply": "Hello!"
+  "post": "12432422"
   }
 ```
 #### requirements
@@ -153,9 +153,9 @@ Register a new user
 ### Request Body
 ```json
 {
-  username: "john"
-  password: "wefafaeef"
-  confirm_password: "wefafaeef"
+  "username": "john"
+  "password": "wefafaeef"
+  "confirm_password": "wefafaeef"
   }
 ```
 #### responses
@@ -171,8 +171,8 @@ Log in a user
 ### Request Body
 ```json
 {
-  username: "john"
-  password: "wefafaeef"
+  "username": "john"
+  "password": "wefafaeef"
   }
 ```
 
