@@ -2,6 +2,12 @@
 
 This is a backend service that is built for discussion board (https://github.com/kokonattuDream/DiscussionBoard-UI) 
 
+## Project setup
+```
+npm install
+npm start
+```
+
 
 ## API
 
