@@ -7,12 +7,6 @@ exports.addReply = async (req, res) => {
     console.log(req.body);
     try {
       if(req.session.user){
-        /** 
-        let user = await User.findOne({ username: req.body.user });
-        console.log(user);
-        if (!user) {
-          res.status(404).send("username not found!");
-        }*/
 
         let post = await Post.findById(req.body.post);
         
@@ -39,7 +33,7 @@ exports.addReply = async (req, res) => {
           Cache.set(req.body.post, postCache);
         }
         
-        res.status(200).json({ message: "Reply submitted" });
+        res.status(201).json({ message: "Reply submitted" });
       } else {
         res.status(403).json({ message: "User Login Required" });
       }
