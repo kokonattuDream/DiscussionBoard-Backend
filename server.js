@@ -18,12 +18,12 @@ const passport = require('./lib/passport-local');
 
 mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
-
+/** 
 app.use(cors({
    origin: frontend_api,
    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
    credentials: true
-}))
+}))*/
 
 app.use((req, res, next) => {
    res.header("Access-Control-Allow-Origin", frontend_api);
@@ -33,12 +33,14 @@ app.use((req, res, next) => {
    next();
 });
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use(passport.initialize());
 app.use(passport.session());
+
 const sessionMiddleware = require('./middleware/sessionMiddleware');
+
 app.use(sessionMiddleware);
 app.use(userRoute);
 app.use(postRoute);
