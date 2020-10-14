@@ -46,9 +46,6 @@ exports.loginUser = async (req, res, next) => {
 }
 
 exports.logoutUser = (req, res) =>{
-   
-    //res.status(200).json({message: 'User successfully log out'});
-    
     req.session.destroy(function(err){
         if(err){
             console.log(err);
