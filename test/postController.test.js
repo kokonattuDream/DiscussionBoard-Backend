@@ -1,11 +1,11 @@
-let controller = require('../controllers/postController');
 const mockingoose = require('mockingoose').default;;
-const model = require('../models/post');
 const httpMock = require('node-mocks-http');
+const model = require('../models/post');
 const Cache = require("../lib/cache");
 
 let req, res;
 
+let controller = require('../controllers/postController');
 let postData = require('./mockData/postData.json');
 let userData = require('./mockData/userData.json');
 
@@ -144,6 +144,8 @@ describe("Get a single Post by id", () => {
         let cacheData = Cache.get(JSON.stringify(onePost._id));
         
         verifyCacheContent(cacheData, onePost);
+
+        Cache.del(JSON.stringify(onePost._id));
     });
     
 });

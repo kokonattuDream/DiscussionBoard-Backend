@@ -19,7 +19,9 @@ exports.addReply = async (req, res) => {
         post.replies.push(newReply._id);
         post.updated_date = newReply.date;
 
+
         await post.save();
+        
         
         let replyCache = JSON.parse(JSON.stringify(newReply));
         replyCache.user = {

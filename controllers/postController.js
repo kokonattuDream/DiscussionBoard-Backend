@@ -91,7 +91,7 @@ exports.getPost = async(req, res) => {
             path:'replies',
             populate: { path: "user", select:"username" }
           });
-          console.log(post);
+          //console.log(post);
           if(!post){
             res.status(404).send("Post not found");
           } else {
