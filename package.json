@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test:unit",
+    "test:unit": "jest test/unit/*"
   },
   "repository": {
     "type": "git",
@@ -42,12 +43,17 @@
     "multer": "^1.4.2",
     "multer-storage-cloudinary": "^2.2.1",
     "node-cache": "^5.1.0",
+    "node-mocks-http": "^1.9.0",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "redis": "^3.0.2",
-    "session-file-store": "^1.4.0"
+    "session-file-store": "^1.4.0",
+    "sinon": "^9.2.0",
+    "supertest": "^5.0.0"
   },
   "devDependencies": {
+    "@shelf/jest-mongodb": "^1.2.3",
+    "jest": "^26.5.3",
     "nodemon": "^2.0.3",
     "prettier": "2.0.5"
   }
