@@ -1,11 +1,13 @@
 const passport = require('passport');
 
-exports.createUser = (req, res, next) => {
+exports.createUser = (req, res) => {
+    console.log(req.body);
     if(!req.body.username || !req.body.password){
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
-
+    
     passport.authenticate('local-signup', (err, user, info) =>{
+        console.log(user);
         if(err){
             console.error(err);
             return res.status(500).json({error: err});
@@ -19,14 +21,13 @@ exports.createUser = (req, res, next) => {
         };
         req.session.user = user;
         return res.status(201).json({message: 'User successfully created', user: res_user});
-    })(req, res, next);
+    })(req, res);
 }
 
-exports.loginUser = async (req, res, next) => {
+exports.loginUser = async (req, res) => {
     if(!req.body.username || !req.body.password === undefined){
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
-    
     passport.authenticate('local-login', (err, user, info) =>{
         if(err){
             console.error(err);
@@ -42,7 +43,7 @@ exports.loginUser = async (req, res, next) => {
         };
         req.session.user = user;
         return res.status(200).json({message: 'User successfully logined', user: res_user});
-    })(req, res, next);
+    })(req, res);
 }
 
 exports.logoutUser = (req, res) =>{

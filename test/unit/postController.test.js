@@ -1,11 +1,11 @@
 const mockingoose = require('mockingoose').default;;
 const httpMock = require('node-mocks-http');
-const model = require('../models/post');
-const Cache = require("../lib/cache");
+const model = require('../../models/post');
+const Cache = require("../../lib/cache");
 
 let req, res;
 
-let controller = require('../controllers/postController');
+let controller = require('../../controllers/postController');
 let postData = require('./mockData/postData.json');
 let userData = require('./mockData/userData.json');
 
