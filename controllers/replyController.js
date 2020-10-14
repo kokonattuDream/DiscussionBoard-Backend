@@ -1,5 +1,4 @@
 const Reply = require("../models/reply");
-const User = require("../models/user");
 const Post = require("../models/post");
 const Cache = require("../lib/cache");
 

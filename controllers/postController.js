@@ -1,6 +1,4 @@
 const Post = require("../models/post");
-const User = require("../models/user");
-const Reply = require("../models/reply");
 const Cache = require("../lib/cache");
 
 exports.createPost = async (req, res) => {

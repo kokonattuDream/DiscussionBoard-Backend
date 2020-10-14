@@ -1,5 +1,4 @@
 const passport = require('passport');
-const User = require('../models/user');
 
 exports.createUser = (req, res, next) => {
     if(!req.body.username || !req.body.password){
