@@ -29,9 +29,6 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
-app.use(passport.initialize());
-app.use(passport.session());
-
 const sessionMiddleware = require('./middleware/sessionMiddleware');
 
 app.use(sessionMiddleware);
