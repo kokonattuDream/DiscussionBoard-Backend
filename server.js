@@ -2,7 +2,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const app= express();
-const cors = require('cors');
 
 const dotenv = require('dotenv');
 dotenv.config();
@@ -18,12 +17,6 @@ const passport = require('./lib/passport-local');
 
 mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
-/** 
-app.use(cors({
-   origin: frontend_api,
-   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-   credentials: true
-}))*/
 
 app.use((req, res, next) => {
    res.header("Access-Control-Allow-Origin", frontend_api);
