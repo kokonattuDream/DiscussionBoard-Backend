@@ -1,0 +1,17 @@
+{
+    "replies": [],
+    "imageId": "",
+    "imageUrl": "",
+    "_id": "5f8728e821c9ca79596a705c",
+    "title": "Great!",
+    "user": {
+        "_id": "5ecb240b9595af4d85977856",
+        "username": "adminUser"
+    },
+    "create_date": "2020-10-14T16:35:52.686Z",
+    "updated_date": "2020-10-14T16:35:52.686Z",
+    "text": "Great1",
+    "category": "Finance",
+    "region": "Victoria",
+    "__v": 0
+}

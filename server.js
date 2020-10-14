@@ -9,7 +9,7 @@ const db_user = process.env.DB_USER;
 const db_password = process.env.DB_PASSWORD;
 const frontend_api = process.env.FRONT_END_API;
 const mongoose = require('mongoose');
-const url = `mongodb+srv://${db_user}:${db_password}@cluster0-wup3f.mongodb.net/test?retryWrites=true&w=majority`;
+const url = process.env.DB_URL;
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
 const replyRoute = require('./routes/replyRoute');

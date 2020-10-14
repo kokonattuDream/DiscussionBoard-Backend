@@ -4,6 +4,7 @@ const Cache = require("../lib/cache");
 exports.createPost = async (req, res) => {
   try {
     if(req.session.user){
+      //console.log(req.session.user);
       let data = JSON.parse(req.body.data);
       
       let newPost = Post({
@@ -15,30 +16,28 @@ exports.createPost = async (req, res) => {
         category: data.category,
         region: data.region
       });
-
+      
       if (req.file) {
         newPost.imageId = req.file.public_id;
         newPost.imageUrl = req.file.url;
       }
 
-      console.log(newPost);
       let post_with_id = await newPost.save();
       let post_json = JSON.parse(JSON.stringify(post_with_id));
-    
+      
       post_json.user = {
         username: req.session.user.username
       };
       post_json.create_date = newPost.create_date;
       post_json.updated_date = newPost.updated_date;
-      
+  
       Cache.set(JSON.stringify(post_json._id), post_json);
-      
       res.status(201).json({ message: "Post created successfully" });
     } else {
       res.status(403).json({ message: "Login Required" });
     }
   } catch (err) {
-    console.error("Error: " + err);
+    console.log("Error: " + err);
     res.status(500).send(err);
   }
 };
@@ -70,7 +69,6 @@ exports.getAllPosts = async (req, res) => {
           return 0;
         }
       });
-      console.log(all_posts);
     }
     res.status(200).json({ posts: all_posts });
   } catch (err) {
@@ -81,10 +79,6 @@ exports.getAllPosts = async (req, res) => {
 
 exports.getPost = async(req, res) => {
     try {
-        if(!req.params.id){
-            console.error("No Post id");
-            res.status(400).send("No Post id");
-        }
         let post = null;
 
         post = Cache.get(req.params.id);
@@ -97,7 +91,7 @@ exports.getPost = async(req, res) => {
             path:'replies',
             populate: { path: "user", select:"username" }
           });
-
+          console.log(post);
           if(!post){
             res.status(404).send("Post not found");
           } else {
@@ -106,7 +100,7 @@ exports.getPost = async(req, res) => {
           }
         }
     } catch (error){
-        console.log("Error: " + error);
+        console.error("Error: " + error);
         res.status(500).send(error);
     }
 }
