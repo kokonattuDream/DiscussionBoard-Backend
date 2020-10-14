@@ -5,8 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "npm run test:unit",
-    "test:unit": "jest test/*"
+    "test": "NODE_ENV=test npm run test:integration",
+    "test:unit": "jest test/unit/*",
+    "test:integration": "jest test/integration/*"
   },
   "repository": {
     "type": "git",

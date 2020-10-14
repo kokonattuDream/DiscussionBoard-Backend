@@ -1,25 +1,26 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
-const app= express();
-
+const app = express();
 const dotenv = require('dotenv');
+
 dotenv.config();
-const db_user = process.env.DB_USER;
-const db_password = process.env.DB_PASSWORD;
-const frontend_api = process.env.FRONT_END_API;
+
+const frontendUrl = process.env.FRONT_END_URL;
 const mongoose = require('mongoose');
-const url = process.env.DB_URL;
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
 const replyRoute = require('./routes/replyRoute');
 const passport = require('./lib/passport-local');
 
-mongoose.connect(url,{ useNewUrlParser: true, useUnifiedTopology: true });
+const dbUrl = process.env.NODE_ENV !== "test" ? process.env.DB_URL : process.env.TEST_DB_URL;
+
+mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
 
+
 app.use((req, res, next) => {
-   res.header("Access-Control-Allow-Origin", frontend_api);
+   res.header("Access-Control-Allow-Origin", frontendUrl);
    res.header("Access-Control-Allow-Credentials", "true");
    res.header("Access-Control-Allow-Methods", "GET", "POST", "DELETE", "PUT");
    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -37,6 +38,5 @@ app.use(postRoute);
 app.use(replyRoute);
 
 let serverPort = 3000;
-app.listen(process.env.PORT || serverPort, () => {
-   console.log("server running on port 3000");
-});
+
+module.exports = app.listen(process.env.PORT || serverPort);

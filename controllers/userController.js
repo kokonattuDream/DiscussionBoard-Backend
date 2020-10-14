@@ -1,13 +1,11 @@
 const passport = require('passport');
 
 exports.createUser = (req, res) => {
-    console.log(req.body);
     if(!req.body.username || !req.body.password){
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
     
     passport.authenticate('local-signup', (err, user, info) =>{
-        console.log(user);
         if(err){
             console.error(err);
             return res.status(500).json({error: err});
