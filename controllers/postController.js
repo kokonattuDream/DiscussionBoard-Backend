@@ -3,6 +3,8 @@ const Cache = require("../lib/cache");
 
 exports.createPost = async (req, res) => {
   try {
+    console.log(req.body);
+    console.log(req.session);
     if(req.session.user){
       //console.log(req.session.user);
       let data = JSON.parse(req.body.data);
