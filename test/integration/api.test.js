@@ -90,7 +90,7 @@ describe("Register/Log in Feature", () => {
     });
 });
 
-describe("Get Posts", () =>{
+describe("Posts and Replies", () =>{
     it("Create a New Post", async() => {
 
         let userPayload = {
@@ -111,6 +111,7 @@ describe("Get Posts", () =>{
         expect(response.statusCode).toBe(201);
     });
 
+    let postId = null;
     it("Get Post", async() => {
         let response = await testSession.get('/posts');
 
@@ -127,6 +128,20 @@ describe("Get Posts", () =>{
         expect(response.body.post.title).toEqual(expectedTitle);
         expect(response.body.post.text).toEqual(expectedText);
         expect(response.statusCode).toBe(200);
+    });
+
+    it("Create a New Post", async() => {
+
+        let replyPayload = {
+            user: 'test1',
+            reply: 'It\'s okay',
+            post: postId
+        };
+
+        let response = await testSession.post('/replies').send(replyPayload);
+
+        expect(response.body).toEqual({ "message": "Reply submitted" });
+        expect(response.statusCode).toBe(201);
     });
 });
 
