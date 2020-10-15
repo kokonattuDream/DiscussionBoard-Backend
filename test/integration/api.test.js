@@ -1,8 +1,13 @@
-const app = require('../../server');
+const app = require('../../app');
 const session = require('supertest-session');
 const mongoose = require('mongoose');
 
-let testSession = session(app);
+let testSession;
+
+beforeAll(() =>{
+    app.listen(5000);
+    testSession = session(app);
+});
 describe("Register/Log in Feature", () => {
 
     it("Sign Up a new user", async() =>{
@@ -189,5 +194,4 @@ afterAll(() =>{
     mongoose.connection.collection("users").drop();
     mongoose.connection.collection("posts").drop();
     mongoose.connection.close();
-    app.close();
 });
