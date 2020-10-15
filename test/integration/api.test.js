@@ -90,6 +90,8 @@ describe("Register/Log in Feature", () => {
     });
 });
 
+let postId = null;
+
 describe("Posts and Replies", () =>{
     it("Create a New Post", async() => {
 
@@ -111,7 +113,6 @@ describe("Posts and Replies", () =>{
         expect(response.statusCode).toBe(201);
     });
 
-    let postId = null;
     it("Get Post", async() => {
         let response = await testSession.get('/posts');
 
@@ -130,7 +131,7 @@ describe("Posts and Replies", () =>{
         expect(response.statusCode).toBe(200);
     });
 
-    it("Create a New Post", async() => {
+    it("Reply to Post", async() => {
 
         let replyPayload = {
             user: 'test1',
@@ -142,6 +143,45 @@ describe("Posts and Replies", () =>{
 
         expect(response.body).toEqual({ "message": "Reply submitted" });
         expect(response.statusCode).toBe(201);
+    });
+});
+
+describe("Non Login users", () =>{
+
+    it("Log out", async() => {
+
+        let response = await testSession
+            .delete('/user-session');
+        
+        expect(response.statusCode).toBe(204);
+    });
+
+
+    it("Non-Login User create a Post", async() => {
+
+        let postPayload = {
+            file: 'null',
+            data: '{"category":"Friends","region":"Ottawa","title":"Looking for friends in Ottawa","text":"Ottawa","username":"adminUser"}'
+        };
+
+        let response = await testSession.post('/posts').send(postPayload);
+
+        expect(response.body).toEqual({"message": "Login Required"});
+        expect(response.statusCode).toBe(403);
+    });
+
+    it("Non-Login user reply to Post", async() => {
+
+        let replyPayload = {
+            user: '',
+            reply: 'It\'s okay',
+            post: postId
+        };
+
+        let response = await testSession.post('/replies').send(replyPayload);
+
+        expect(response.body).toEqual({ "message": "User Login Required" });
+        expect(response.statusCode).toBe(403);
     });
 });
 

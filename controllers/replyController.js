@@ -36,7 +36,7 @@ exports.addReply = async (req, res) => {
         
         res.status(201).json({ message: "Reply submitted" });
       } else {
-        res.status(401).json({ message: "User Login Required" });
+        res.status(403).json({ message: "User Login Required" });
       }
     } catch (err) {
       console.error("Error: " + err);
