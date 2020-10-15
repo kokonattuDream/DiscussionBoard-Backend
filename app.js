@@ -37,4 +37,6 @@ app.use(userRoute);
 app.use(postRoute);
 app.use(replyRoute);
 
+app.listen(process.env.PORT || 3000);
+
 module.exports = app;
