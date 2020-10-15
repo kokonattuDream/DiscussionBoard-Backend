@@ -55,7 +55,7 @@ describe("Create Post",()=>{
         mockingoose(model).toReturn(postData, 'save');
         
         await controller.createPost(req, res);
-        expect(res.statusCode).toBe(401);
+        expect(res.statusCode).toBe(403);
         expect(res._getJSONData()).toStrictEqual({ message: "Login Required" });
 
         let cacheData = Cache.get(JSON.stringify(postData._id));

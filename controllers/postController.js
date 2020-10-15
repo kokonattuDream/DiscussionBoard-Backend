@@ -36,7 +36,7 @@ exports.createPost = async (req, res) => {
       res.status(403).json({ message: "Login Required" });
     }
   } catch (err) {
-    console.log("Error: " + err);
+    console.error("Error: " + err);
     res.status(500).send(err);
   }
 };
@@ -71,7 +71,7 @@ exports.getAllPosts = async (req, res) => {
     }
     res.status(200).json({ posts: all_posts });
   } catch (err) {
-    console.log("Error: " + err);
+    console.error("Error: " + err);
     res.status(500).send(err);
   }
 };
@@ -90,7 +90,7 @@ exports.getPost = async(req, res) => {
             path:'replies',
             populate: { path: "user", select:"username" }
           });
-          //console.log(post);
+          
           if(!post){
             res.status(404).send("Post not found");
           } else {

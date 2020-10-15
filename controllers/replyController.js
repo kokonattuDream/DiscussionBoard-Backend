@@ -3,7 +3,6 @@ const Post = require("../models/post");
 const Cache = require("../lib/cache");
 
 exports.addReply = async (req, res) => {
-    console.log(req.body);
     try {
       if(req.session.user){
 

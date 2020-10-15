@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "NODE_ENV=test npm run test:integration",
+    "test": "NODE_ENV=test npm run test:all",
+    "test:all": "jest test/* --coverage",
     "test:unit": "jest test/unit/*",
     "test:integration": "jest test/integration/*"
   },

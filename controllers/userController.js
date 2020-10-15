@@ -46,7 +46,7 @@ exports.loginUser = async (req, res) => {
 exports.logoutUser = (req, res) =>{
     req.session.destroy(function(err){
         if(err){
-            console.log(err);
+            console.error(err);
             res.status(500).json({message: 'User log out failed'});
         } else {
             res.status(204).json({message: 'User successfully log out'});
