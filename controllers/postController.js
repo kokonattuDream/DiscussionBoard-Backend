@@ -21,16 +21,16 @@ exports.createPost = async (req, res) => {
         newPost.imageUrl = req.file.url;
       }
 
-      let post_with_id = await newPost.save();
-      let post_json = JSON.parse(JSON.stringify(post_with_id));
+      let postWithId = await newPost.save();
+      let postJson = JSON.parse(JSON.stringify(postWithId));
       
-      post_json.user = {
+      postJson.user = {
         username: req.session.user.username
       };
-      post_json.create_date = newPost.create_date;
-      post_json.updated_date = newPost.updated_date;
+      postJson.create_date = newPost.create_date;
+      postJson.updated_date = newPost.updated_date;
   
-      Cache.set(JSON.stringify(post_json._id), post_json);
+      Cache.set(JSON.stringify(postJson._id), postJson);
       res.status(201).json({ message: "Post created successfully" });
     } else {
       res.status(403).json({ message: "Login Required" });
@@ -43,23 +43,23 @@ exports.createPost = async (req, res) => {
 
 exports.getAllPosts = async (req, res) => {
   try {
-    let all_posts;
+    let allPosts;
     if(Object.keys(Cache.data).length === 0){
-      all_posts = await Post.find()
+      allPosts = await Post.find()
         .populate("user", "username")
         .sort({ updated_date: -1 });
       
-      await Promise.all(all_posts.map(post =>{
+      await Promise.all(allPosts.map(post =>{
           Cache.set(JSON.stringify(post._id), post);
       }));
     } else {
-      all_posts = [];
+      allPosts = [];
 
       await Promise.all(Object.keys(Cache.data).map(key =>{
-        all_posts.push(Cache.get(key));
+        allPosts.push(Cache.get(key));
       }));
 
-      all_posts.sort((x,y)=>{
+      allPosts.sort((x,y)=>{
         if(x.updated_date < y.updated_date){
           return 1;
         } else if(x.updated_date > y.updated_date){
@@ -69,7 +69,7 @@ exports.getAllPosts = async (req, res) => {
         }
       });
     }
-    res.status(200).json({ posts: all_posts });
+    res.status(200).json({ posts: allPosts });
   } catch (err) {
     console.error("Error: " + err);
     res.status(500).send(err);
