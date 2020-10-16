@@ -10,8 +10,8 @@
                 "username": "adminUser"
             },
             "text": "Great1",
-            "create_date": "2020-10-14T16:35:52.686Z",
-            "updated_date": "2020-10-14T16:35:52.686Z",
+            "createDate": "2020-10-14T16:35:52.686Z",
+            "updatedDate": "2020-10-14T16:35:52.686Z",
             "category": "Finance",
             "region": "Victoria",
             "__v": 0
@@ -27,8 +27,8 @@
                 "username": "adminUser"
             },
             "text": "Event",
-            "create_date": "2020-10-14T15:46:38.501Z",
-            "updated_date": "2020-10-14T15:46:38.501Z",
+            "createDate": "2020-10-14T15:46:38.501Z",
+            "updatedDate": "2020-10-14T15:46:38.501Z",
             "category": "Life",
             "region": "Victoria",
             "__v": 0
@@ -44,8 +44,8 @@
                 "username": "adminUser"
             },
             "text": "ThanksgivingDay",
-            "create_date": "2020-10-14T15:38:26.377Z",
-            "updated_date": "2020-10-14T15:38:26.377Z",
+            "createDate": "2020-10-14T15:38:26.377Z",
+            "updatedDate": "2020-10-14T15:38:26.377Z",
             "category": "Family",
             "region": "Victoria",
             "__v": 0
@@ -61,8 +61,8 @@
                 "username": "adminUser"
             },
             "text": "restaurant",
-            "create_date": "2020-10-14T15:36:28.582Z",
-            "updated_date": "2020-10-14T15:36:28.582Z",
+            "createDate": "2020-10-14T15:36:28.582Z",
+            "updatedDate": "2020-10-14T15:36:28.582Z",
             "category": "Food",
             "region": "Vancouver",
             "__v": 0
@@ -78,8 +78,8 @@
                 "username": "cook_master"
             },
             "text": "How hard to find a job?",
-            "create_date": "2020-10-14T15:02:39.286Z",
-            "updated_date": "2020-10-14T15:02:39.286Z",
+            "createDate": "2020-10-14T15:02:39.286Z",
+            "updatedDate": "2020-10-14T15:02:39.286Z",
             "category": "Work",
             "region": "Toronto",
             "__v": 0
@@ -95,8 +95,8 @@
                 "username": "cook_master"
             },
             "text": "How is it?",
-            "create_date": "2020-10-14T15:00:40.090Z",
-            "updated_date": "2020-10-14T15:00:40.090Z",
+            "createDate": "2020-10-14T15:00:40.090Z",
+            "updatedDate": "2020-10-14T15:00:40.090Z",
             "category": "Immigrant",
             "region": "Vancouver",
             "__v": 0
@@ -112,8 +112,8 @@
                 "username": "cook_master"
             },
             "text": "How do you find taking online classes?",
-            "create_date": "2020-10-14T14:38:39.361Z",
-            "updated_date": "2020-10-14T14:38:39.361Z",
+            "createDate": "2020-10-14T14:38:39.361Z",
+            "updatedDate": "2020-10-14T14:38:39.361Z",
             "category": "Study",
             "region": "Toronto",
             "__v": 0
@@ -132,8 +132,8 @@
                 "username": "adminUser"
             },
             "text": "Any plan for the family day?",
-            "create_date": "2020-06-11T23:47:20.020Z",
-            "updated_date": "2020-10-14T14:32:41.113Z",
+            "createDate": "2020-06-11T23:47:20.020Z",
+            "updatedDate": "2020-10-14T14:32:41.113Z",
             "category": "Family",
             "region": "Toronto",
             "__v": 2
@@ -149,8 +149,8 @@
                 "username": "cook_master"
             },
             "text": "Victoria!",
-            "create_date": "2020-10-14T13:45:16.402Z",
-            "updated_date": "2020-10-14T13:45:16.402Z",
+            "createDate": "2020-10-14T13:45:16.402Z",
+            "updatedDate": "2020-10-14T13:45:16.402Z",
             "category": "Work",
             "region": "Victoria",
             "__v": 0
@@ -166,8 +166,8 @@
                 "username": "cook_master"
             },
             "text": "cakes!",
-            "create_date": "2020-10-07T20:32:06.616Z",
-            "updated_date": "2020-10-07T20:32:06.616Z",
+            "createDate": "2020-10-07T20:32:06.616Z",
+            "updatedDate": "2020-10-07T20:32:06.616Z",
             "category": "Family",
             "region": "Toronto",
             "__v": 0
@@ -183,8 +183,8 @@
                 "username": "cook_master"
             },
             "text": "How many percentages of saving should I invest?",
-            "create_date": "2020-10-07T20:26:37.063Z",
-            "updated_date": "2020-10-07T20:26:37.063Z",
+            "createDate": "2020-10-07T20:26:37.063Z",
+            "updatedDate": "2020-10-07T20:26:37.063Z",
             "category": "Finance",
             "region": "Vancouver",
             "__v": 0
@@ -202,8 +202,8 @@
                 "username": "adminUser"
             },
             "text": "Math",
-            "create_date": "2020-06-06T01:22:12.285Z",
-            "updated_date": "2020-06-06T01:35:59.504Z",
+            "createDate": "2020-06-06T01:22:12.285Z",
+            "updatedDate": "2020-06-06T01:35:59.504Z",
             "category": "Study",
             "region": "Canada",
             "__v": 1
@@ -219,8 +219,8 @@
                 "username": "adminUser"
             },
             "text": "Love Ocean.",
-            "create_date": "2020-06-06T01:30:29.561Z",
-            "updated_date": "2020-06-06T01:30:29.561Z",
+            "createDate": "2020-06-06T01:30:29.561Z",
+            "updatedDate": "2020-06-06T01:30:29.561Z",
             "category": "Family",
             "region": "Toronto",
             "__v": 0
@@ -236,8 +236,8 @@
                 "username": "adminUser"
             },
             "text": "Any companies?",
-            "create_date": "2020-06-03T22:48:22.494Z",
-            "updated_date": "2020-06-03T22:48:22.494Z",
+            "createDate": "2020-06-03T22:48:22.494Z",
+            "updatedDate": "2020-06-03T22:48:22.494Z",
             "category": "Work",
             "region": "Ottawa",
             "__v": 0
@@ -253,8 +253,8 @@
                 "username": "adminUser"
             },
             "text": "Great cake!",
-            "create_date": "2020-06-01T23:54:29.886Z",
-            "updated_date": "2020-06-01T23:54:29.886Z",
+            "createDate": "2020-06-01T23:54:29.886Z",
+            "updatedDate": "2020-06-01T23:54:29.886Z",
             "category": "Food",
             "region": "Vancouver",
             "__v": 0
@@ -270,8 +270,8 @@
                 "username": "adminUser"
             },
             "text": "How many universities?",
-            "create_date": "2020-05-25T01:50:07.082Z",
-            "updated_date": "2020-05-25T01:50:07.082Z",
+            "createDate": "2020-05-25T01:50:07.082Z",
+            "updatedDate": "2020-05-25T01:50:07.082Z",
             "category": "Study",
             "region": "Ottawa",
             "__v": 0

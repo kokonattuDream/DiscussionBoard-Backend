@@ -10,8 +10,8 @@ exports.createPost = async (req, res) => {
         title: data.title,
         user: req.session.user._id,
         text: data.text,
-        create_date: new Date(),
-        updated_date: new Date(),
+        createDate: new Date(),
+        updatedDate: new Date(),
         category: data.category,
         region: data.region
       });
@@ -27,8 +27,8 @@ exports.createPost = async (req, res) => {
       postJson.user = {
         username: req.session.user.username
       };
-      postJson.create_date = newPost.create_date;
-      postJson.updated_date = newPost.updated_date;
+      postJson.createDate = newPost.createDate;
+      postJson.updatedDate = newPost.updatedDate;
   
       Cache.set(JSON.stringify(postJson._id), postJson);
       res.status(201).json({ message: "Post created successfully" });
@@ -60,9 +60,9 @@ exports.getAllPosts = async (req, res) => {
       }));
 
       allPosts.sort((x,y)=>{
-        if(x.updated_date < y.updated_date){
+        if(x.updatedDate < y.updatedDate){
           return 1;
-        } else if(x.updated_date > y.updated_date){
+        } else if(x.updatedDate > y.updatedDate){
           return -1;
         } else {
           return 0;

@@ -12,11 +12,11 @@ exports.createUser = (req, res) => {
             return res.status(500).json({error: message});
         }
         
-        let res_user = {
+        let userOnlyName = {
             username: user.username
         };
         req.session.user = user;
-        return res.status(201).json({message: 'User successfully created', user: res_user});
+        return res.status(201).json({message: 'User successfully created', user: userOnlyName});
     })(req, res);
 }
 
@@ -35,11 +35,11 @@ exports.loginUser = async (req, res) => {
             }
         }
 
-        let res_user = {
+        let userOnlyName = {
             username: user.username
         };
         req.session.user = user;
-        return res.status(200).json({message: 'User successfully logined', user: res_user});
+        return res.status(200).json({message: 'User successfully logined', user: userOnlyName});
     })(req, res);
 }
 

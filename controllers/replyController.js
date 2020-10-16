@@ -16,7 +16,7 @@ exports.addReply = async (req, res) => {
 
         await newReply.save();
         post.replies.push(newReply._id);
-        post.updated_date = newReply.date;
+        post.updatedDate = newReply.date;
 
 
         await post.save();
@@ -28,7 +28,7 @@ exports.addReply = async (req, res) => {
         }
         let postCache = Cache.get(req.body.post);
         if(postCache){
-          postCache.updated_date = post.updated_date;
+          postCache.updatedDate = post.updatedDate;
           postCache.replies.push(replyCache);
           Cache.set(req.body.post, postCache);
         }
