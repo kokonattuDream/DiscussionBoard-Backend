@@ -32,8 +32,8 @@ HTTP response code: 200 and
                 "username": "adminUser"
             },
             "text": "Any plan for the family day?",
-            "create_date": "2020-06-11T23:47:20.020Z",
-            "updated_date": "2020-06-11T23:47:20.020Z",
+            "createDate": "2020-06-11T23:47:20.020Z",
+            "updatedDate": "2020-06-11T23:47:20.020Z",
             "category": "Family",
             "region": "Toronto",
             "__v": 0
@@ -49,8 +49,8 @@ HTTP response code: 200 and
                 "username": "adminUser"
             },
             "text": "How many universities?",
-            "create_date": "2020-05-25T01:50:07.082Z",
-            "updated_date": "2020-05-25T01:50:07.082Z",
+            "createDate": "2020-05-25T01:50:07.082Z",
+            "updatedDate": "2020-05-25T01:50:07.082Z",
             "category": "Study",
             "region": "Ottawa",
             "__v": 0
@@ -84,8 +84,8 @@ HTTP response code: 200 and
             "username": "adminUser"
         },
         "text": "Any plan for the family day?",
-        "create_date": "2020-06-11T23:47:20.020Z",
-        "updated_date": "2020-06-11T23:47:20.020Z",
+        "createDate": "2020-06-11T23:47:20.020Z",
+        "updatedDate": "2020-06-11T23:47:20.020Z",
         "category": "Family",
         "region": "Toronto",
         "__v": 0
