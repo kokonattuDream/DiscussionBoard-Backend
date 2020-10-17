@@ -23,7 +23,7 @@ beforeEach(() => {
 });
 
 describe("Add Reply",()=>{
-    it("Add a valid replay", async() => {
+    it("Add a valid reply", async() => {
         req.session.user = {
             "username": "adminUser"
         };
@@ -36,6 +36,44 @@ describe("Add Reply",()=>{
 
         await replyController.addReply(req, res);
         expect(res.statusCode).toBe(201);
+    });
+
+    it("Add a reply: Save Reply Failed", async() => {
+        req.session.user = {
+            "username": "adminUser"
+        };
+        req.body = replyPayload;
+        mockingoose(replyModel).toReturn(new Error('Error'), 'save');
+        mockingoose(postModel).toReturn(post, 'findOne');
+    
+        await replyController.addReply(req, res);
+        expect(res.statusCode).toBe(500);
+    });
+
+    it("Add a reply: Find Post Failed", async() => {
+        req.session.user = {
+            "username": "adminUser"
+        };
+        req.body = replyPayload;
+        mockingoose(replyModel).toReturn(savedReply);
+        mockingoose(postModel).toReturn(new Error('Error'), 'findOne');
+        mockingoose(postModel).toReturn(savedPost, 'save');
+
+        await replyController.addReply(req, res);
+        expect(res.statusCode).toBe(500);
+    });
+
+    it("Add a reply: Save Post with New Reply Failed", async() => {
+        req.session.user = {
+            "username": "adminUser"
+        };
+        req.body = replyPayload;
+        mockingoose(replyModel).toReturn(savedReply);
+        mockingoose(postModel).toReturn(post, 'findOne');
+        mockingoose(postModel).toReturn(new Error('error'), 'save');
+
+        await replyController.addReply(req, res);
+        expect(res.statusCode).toBe(500);
     });
      
 });

@@ -29,12 +29,12 @@ exports.addReply = async (req, res) => {
           Cache.set(postId, postCache);
         }
         
-        res.status(201).json({ message: "Reply submitted" });
+        return res.status(201).json({ message: "Reply submitted" });
       } else {
-        res.status(403).json({ message: "User Login Required" });
+        return res.status(401).json({ message: "User Login Required" });
       }
     } catch (err) {
       console.error("Error: " + err);
-      res.status(500).send(err);
+      return res.status(500).send(err);
     }
   };

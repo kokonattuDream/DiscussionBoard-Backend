@@ -108,6 +108,21 @@ describe("Create New User",() => {
             error: 'Username already exist'
          });
     });
+
+    it("Create a user: Failed", async()=>{
+        let payload = {
+            username: "me",
+            password: "greatgreat",
+            confirmPassword: "greatgreat"
+        }
+        req.body = payload;
+        mockingoose(model).toReturn(null, 'findOne');
+        mockingoose(model).toReturn(new Error('error'), 'save');
+
+        await controller.createUser(req, res);
+
+        expect(res.statusCode).toBe(500);
+    });
 });
 
 describe("Log in",() => {
@@ -190,6 +205,40 @@ describe("Log in",() => {
         expect(res.statusCode).toBe(400);
         expect(res._getJSONData()).toStrictEqual({ 
             error: 'Cannot submit empty fields'
+        });
+    });
+
+    it("Login: Failed", async()=>{
+        let payload = {
+            username: "me",
+            password: "greatgreat"
+        }
+        req.body = payload;
+
+        mockingoose(model).toReturn(new Error('error'), 'findOne');
+
+        await controller.loginUser(req, res);
+
+        expect(res.statusCode).toBe(500);
+    });
+});
+
+describe("Log out",() => {
+    it("Log out", async() => {
+        req.session.destroy = jest.fn((f) => {f();})
+        await controller.logoutUser(req, res);
+        expect(res.statusCode).toBe(204);
+        expect(res._getJSONData()).toStrictEqual({ 
+            message: 'User successfully log out'
+        });
+    });
+
+    it("Log out: failed", async() => {
+        req.session.destroy = jest.fn((f) => { f(new Error('error')) });
+        await controller.logoutUser(req, res);
+        expect(res.statusCode).toBe(500);
+        expect(res._getJSONData()).toStrictEqual({ 
+            error: 'User log out failed'
         });
     });
 });

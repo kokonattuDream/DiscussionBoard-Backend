@@ -28,7 +28,7 @@ exports.createPost = async (req, res) => {
       Cache.set(JSON.stringify(newPost._id), newPost);
       res.status(201).json({ message: "Post created successfully" });
     } else {
-      res.status(403).json({ message: "Login Required" });
+      res.status(401).json({ message: "Login Required" });
     }
   } catch (err) {
     console.error("Error: " + err);

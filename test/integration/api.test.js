@@ -183,7 +183,7 @@ describe("Non Login users", () =>{
         let response = await testSession.post('/posts').send(postPayload);
 
         expect(response.body).toEqual({"message": "Login Required"});
-        expect(response.statusCode).toBe(403);
+        expect(response.statusCode).toBe(401);
     });
 
     it("Non-Login user reply to Post", async() => {
@@ -197,7 +197,7 @@ describe("Non Login users", () =>{
         let response = await testSession.post('/replies').send(replyPayload);
 
         expect(response.body).toEqual({ "message": "User Login Required" });
-        expect(response.statusCode).toBe(403);
+        expect(response.statusCode).toBe(401);
     });
 });
 
