@@ -203,9 +203,10 @@ describe("Non Login users", () =>{
     });
 });
 
-afterAll(() =>{
-    mongoose.connection.collection("users").drop();
-    mongoose.connection.collection("posts").drop();
-    mongoose.connection.collection("replies").drop();
+afterAll(async () =>{
+    await mongoose.connection.collection("users").drop();
+    await mongoose.connection.collection("posts").drop();
+    await mongoose.connection.collection("replies").drop();
+    
     mongoose.connection.close();
 });
