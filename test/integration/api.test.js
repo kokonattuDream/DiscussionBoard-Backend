@@ -29,6 +29,23 @@ describe("Register/Log in Feature", () => {
         });
     });
 
+    it("Sign Up an already existed user", async() =>{
+        let newUserPayload = {
+            "username": "test1",
+            "password": "12345678",
+            "confirmPassword": "12345678"
+        };
+        
+        let response = await testSession
+            .post('/users')
+            .send(newUserPayload);
+        
+        expect(response.statusCode).toBe(409);
+        expect(response.body).toEqual({
+            "error": 'Username already exist'
+        });
+    });
+
     it("Log in with existed user", async() => {
         let userPayload = {
             "username": "test1",
@@ -59,7 +76,7 @@ describe("Register/Log in Feature", () => {
             .post('/user-session')
             .send(userPayload);
         
-        expect(response.statusCode).toBe(500);
+        expect(response.statusCode).toBe(401);
         expect(response.body).toEqual(
             {
                 "error": 'Password is incorrect', 

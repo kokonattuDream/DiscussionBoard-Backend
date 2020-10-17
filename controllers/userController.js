@@ -9,10 +9,15 @@ exports.createUser = (req, res) => {
     }
    
     passport.authenticate('local-signup', (err, user, info) =>{
-        if(err || info){
-            let message = err || info;
-            console.error(message);
-            return res.status(500).json({error: message});
+        if(err){
+            console.error(err);
+            return res.status(500).json({error: err});
+        } else if(info){
+            if(info === 'Username already exist'){
+                return res.status(409).json({error: info});
+            } else {
+                return res.status(400).json({error: info});
+            }
         }
         
         req.session.user = {
@@ -33,14 +38,15 @@ exports.loginUser = async (req, res) => {
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
     passport.authenticate('local-login', (err, user, info) =>{
-        if(err || info){
-            let message = err || info;
-            console.error(message);
-            if(message === "Username not found"){
-                return res.status(404).json({error: message});
+        if(info){
+            if(info === "Username not found"){
+                return res.status(404).json({error: info});
             } else {
-                return res.status(500).json({error: message});
+                return res.status(401).json({error: info});
             }
+        } else if(err){
+            console.error(err);
+            return res.status(500).json({error: err});
         }
         req.session.user = {
             _id: user._id,
@@ -51,7 +57,7 @@ exports.loginUser = async (req, res) => {
                 user: {
                     username: user.username,
                 }
-            });
+        });
     })(req, res);
 }
 
