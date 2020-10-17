@@ -29,22 +29,28 @@ jobs:
     - run: npm ci
     - run: |
         npm config set TEST_DB_URL=${TEST_DB_URL}
-        npm config set DB_URL=${DB_URL}
-        npm config set IMG_API_KEY=${IMG_API_KEY}
-        npm config set IMG_API_SECRET=${IMG_API_SECRET}
-        npm config set IMG_CLOUD_NAME=${IMG_CLOUD_NAME}
         npm test
       env:
         TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
-        DB_URL: ${{ secrets.DB_URL }}
-        IMG_API_KEY: ${{ secrets.IMG_API_KEY }}
-        IMG_API_SECRET: ${{ secrets.IMG_API_SECRET }}
-        IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
     - uses: akhileshns/heroku-deploy@master
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "discussion-board-backend"
         heroku_email: ${{secrets.HEROKU_EMAIL}}
+        healthcheck: "https://discussion-board-backend.herokuapp.com/posts"
+        usedocker: true
+        docker_build_args: |
+          TEST_DB_URL
+          DB_URL
+          IMG_API_KEY
+          IMG_API_SECRET
+          IMG_CLOUD_NAME
+        env:
+          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+          DB_URL: ${{ secrets.DB_URL }}
+          IMG_API_KEY: ${{ secrets.IMG_API_KEY }}
+          IMG_API_SECRET: ${{ secrets.IMG_API_SECRET }}
+          IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
 
        
 
