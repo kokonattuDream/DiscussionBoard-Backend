@@ -43,7 +43,6 @@ exports.createPost = async (req, res) => {
 
 exports.getAllPosts = async (req, res) => {
   try {
-    console.log(req.session);
     let allPosts;
     if(Object.keys(Cache.data).length === 0){
       allPosts = await Post.find()
