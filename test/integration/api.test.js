@@ -12,7 +12,8 @@ describe("Register/Log in Feature", () => {
     it("Sign Up a new user", async() =>{
         let newUserPayload = {
             "username": "test1",
-            "password": "12345678"
+            "password": "12345678",
+            "confirmPassword": "12345678"
         };
         
         let response = await testSession
@@ -37,7 +38,6 @@ describe("Register/Log in Feature", () => {
         let response = await testSession
             .post('/user-session')
             .send(userPayload);
-        
         expect(response.statusCode).toBe(200);
         expect(response.body).toEqual(
             {
@@ -47,14 +47,6 @@ describe("Register/Log in Feature", () => {
                 }
             }
         );
-    });
-
-    it("Log out", async() => {
-
-        let response = await testSession
-            .delete('/user-session');
-        
-        expect(response.statusCode).toBe(204);
     });
 
     it("Log in with wrong password", async() => {
@@ -109,7 +101,7 @@ describe("Posts and Replies", () =>{
             data: '{"category":"Friends","region":"Ottawa","title":"Looking for friends in Ottawa","text":"Ottawa","username":"adminUser"}'
         };
 
-        await testSession.post('/user-session').send(userPayload);
+        //await testSession.post('/user-session').send(userPayload);
 
         let response = await testSession.post('/posts').send(postPayload);
 
@@ -137,12 +129,17 @@ describe("Posts and Replies", () =>{
 
     it("Reply to Post", async() => {
 
+        let userPayload = {
+            "username": "test1",
+            "password": "12345678"
+        };
+
         let replyPayload = {
             user: 'test1',
             reply: 'It\'s okay',
             post: postId
         };
-
+        //await testSession.post('/user-session').send(userPayload);
         let response = await testSession.post('/replies').send(replyPayload);
 
         expect(response.body).toEqual({ "message": "Reply submitted" });
