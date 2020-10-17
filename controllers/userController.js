@@ -4,7 +4,10 @@ exports.createUser = (req, res) => {
     if(!req.body.username || !req.body.password){
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
-    
+    if(req.body.password !== req.body.confirmPassword){
+        return res.status(400).json({error: 'Password not match'});
+    }
+   
     passport.authenticate('local-signup', (err, user, info) =>{
         if(err || info){
             let message = err || info;
@@ -12,9 +15,6 @@ exports.createUser = (req, res) => {
             return res.status(500).json({error: message});
         }
         
-        let userOnlyName = {
-            username: user.username
-        };
         req.session.user = {
             _id: user._id,
             username: user.username
