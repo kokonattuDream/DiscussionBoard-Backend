@@ -29,6 +29,16 @@ jobs:
         echo IMG_API_KEY=${{ secrets.IMG_API_KEY }} >> .env
         echo IMG_API_SECRET=${{ secrets.IMG_API_SECRET }} >> .env
         echo IMG_CLOUD_NAME=${{ secrets.IMG_CLOUD_NAME }} >> .env
+
+    - name: Delete gitignore
+      run: |
+        rm .gitignore
+    - name: Push .env to directory
+      run: |
+        git config user.email ${{ secrets.MY_EMAIL }}
+        git config user.name  ${{ secrets.MY_USER_NAME }}
+        git add .
+        git commit -m "environment variables"
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
       with:
