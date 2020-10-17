@@ -32,6 +32,7 @@ jobs:
         npm test
       env:
         TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+        COOKIE_SECRET: ${{ secrets.COOKIE_SECRET}}
     - uses: akhileshns/heroku-deploy@master
       with:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}

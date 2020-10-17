@@ -3,7 +3,7 @@ const FileStore = require('session-file-store')(session);
 
 const sessionMiddleware = session({
     cookieName: 'session',
-    secret: 'random_string_goes_here',
+    secret: process.env.COOKIE_SECRET,
     duration: 30 * 60 * 1000,
     activeDuration: 5 * 60 * 1000,
     store: new FileStore,
