@@ -118,8 +118,6 @@ describe("Posts and Replies", () =>{
             data: '{"category":"Friends","region":"Ottawa","title":"Looking for friends in Ottawa","text":"Ottawa","username":"adminUser"}'
         };
 
-        //await testSession.post('/user-session').send(userPayload);
-
         let response = await testSession.post('/posts').send(postPayload);
 
         expect(response.body).toEqual({"message": "Post created successfully"});
@@ -156,7 +154,7 @@ describe("Posts and Replies", () =>{
             reply: 'It\'s okay',
             post: postId
         };
-        //await testSession.post('/user-session').send(userPayload);
+
         let response = await testSession.post('/replies').send(replyPayload);
 
         expect(response.body).toEqual({ "message": "Reply submitted" });
