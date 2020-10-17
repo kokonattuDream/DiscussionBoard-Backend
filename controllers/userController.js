@@ -1,64 +1,76 @@
-const passport = require('passport');
+const User = require("../models/user");
 
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
     if(!req.body.username || !req.body.password){
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
     if(req.body.password !== req.body.confirmPassword){
         return res.status(400).json({error: 'Password not match'});
     }
-   
-    passport.authenticate('local-signup', (err, user, info) =>{
-        if(err){
-            console.error(err);
-            return res.status(500).json({error: err});
-        } else if(info){
-            if(info === 'Username already exist'){
-                return res.status(409).json({error: info});
-            } else {
-                return res.status(400).json({error: info});
-            }
+
+    if(req.body.password.length <= 5){
+        return res.status(400).json({error: 'Password must be longer than 5 characters'});
+    }
+
+    try{
+        let user = await User.findOne({'username': req.body.username});
+        if (user) {
+            return res.status(409).json({error: 'Username already exist'});
         }
-        
+        let newUser = new User({
+            username: req.body.username,
+        });
+
+        newUser.password = newUser.encryptPassword(req.body.password)
+
+        await newUser.save();
+
         req.session.user = {
-            _id: user._id,
-            username: user.username
+            _id: newUser._id,
+            username: newUser.username
         };
+
         return res.status(201).json({
             message: 'User successfully created', 
             user: {
-                username: user.username
+                username: newUser.username
             }
         });
-    })(req, res);
+    } catch (err){
+        console.error(err);
+        return res.status(500).json({error: err});
+    }
 }
 
 exports.loginUser = async (req, res) => {
     if(!req.body.username || !req.body.password === undefined){
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
-    passport.authenticate('local-login', (err, user, info) =>{
-        if(info){
-            if(info === "Username not found"){
-                return res.status(404).json({error: info});
-            } else {
-                return res.status(401).json({error: info});
-            }
-        } else if(err){
-            console.error(err);
-            return res.status(500).json({error: err});
+    try{
+        let user = await User.findOne({'username': req.body.username});
+        if(!user){
+            return res.status(404).json({error: 'Username not found'}); 
         }
+
+        if(!user.checkPassword(req.body.password)){
+            return res.status(401).json({error: 'Password is incorrect'});
+        }
+
         req.session.user = {
             _id: user._id,
             username: user.username
         };
+
         return res.status(200).json({
                 message: 'User successfully logined', 
                 user: {
                     username: user.username,
                 }
         });
-    })(req, res);
+    } catch(err){
+        console.error(err);
+        return res.status(500).json({error: err});
+    }
 }
 
 exports.logoutUser = (req, res) =>{

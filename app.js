@@ -11,7 +11,6 @@ const mongoose = require('mongoose');
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
 const replyRoute = require('./routes/replyRoute');
-const passport = require('./lib/passport-local');
 
 const dbUrl = process.env.NODE_ENV !== "test" ? process.env.DB_URL : process.env.TEST_DB_URL;
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });

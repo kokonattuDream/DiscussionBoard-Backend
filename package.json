@@ -40,8 +40,6 @@
     "multer-storage-cloudinary": "^2.2.1",
     "node-cache": "^5.1.0",
     "node-mocks-http": "^1.9.0",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0",
     "session-file-store": "^1.4.0"
   },
   "devDependencies": {
