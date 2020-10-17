@@ -14,7 +14,7 @@ const replyRoute = require('./routes/replyRoute');
 const passport = require('./lib/passport-local');
 
 const dbUrl = process.env.NODE_ENV !== "test" ? process.env.DB_URL : process.env.TEST_DB_URL;
-
+console.log(dbUrl);
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.set('useCreateIndex', true);
 
