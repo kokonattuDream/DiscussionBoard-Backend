@@ -21,9 +21,21 @@ beforeEach(()=>{
 let allPosts = require('./mockData/allPosts.json');
 describe("Get All Post", ()=>{
 
-    it('Get all posts', async() => {
+    it('Get all posts from DB & Cache', async() => {
+        //Get from mock database
         model.schema.path('user', Object);
         mockingoose(model).toReturn(allPosts, 'find');
+
+        let expectedCacheSize = Object.keys(Cache.data).length + allPosts.length;
+
+        await controller.getAllPosts(req, res);
+        expect(res.statusCode).toBe(200);
+        expect(res._getJSONData()).toEqual({ posts: allPosts });
+        expect(Object.keys(Cache.data).length).toEqual(expectedCacheSize);
+
+        //Get from Cache
+        mockingoose(model).toReturn(null, 'find');
+        res = httpMock.createResponse();
         await controller.getAllPosts(req, res);
         expect(res.statusCode).toBe(200);
         expect(res._getJSONData()).toEqual({ posts: allPosts });
@@ -34,7 +46,7 @@ let onePost = require('./mockData/post.json');
 describe("Get a single Post by id", () => {
 
     it('Get post by id not exist', async() => {
-        req.params.id = onePost._id;
+        req.params.id = "3535532222";
         mockingoose(model).toReturn(null, 'findOne');
 
         await controller.getPost(req, res);
@@ -42,14 +54,25 @@ describe("Get a single Post by id", () => {
         expect(res.statusCode).toBe(404);
     });
 
-    it('Get post by id', async() => {
+    it('Get post by id from DB & Cache', async() => {
+        //from mock DB
         req.params.id = onePost._id;
+        let expectedCacheSize = Object.keys(Cache.data).length + 1;
+
         model.schema.path('user', Object);
         model.schema.path('replies', Object);
         mockingoose(model).toReturn(onePost, 'findOne');
 
         await controller.getPost(req, res);
 
+        expect(res.statusCode).toBe(200);
+        expect(res._getJSONData()).toStrictEqual({ post: onePost });
+        expect(Object.keys(Cache.data).length).toEqual(expectedCacheSize);
+        
+        //from Cache
+        res = httpMock.createResponse();
+        mockingoose(model).toReturn(null, 'findOne');
+        await controller.getPost(req, res);
         expect(res.statusCode).toBe(200);
         expect(res._getJSONData()).toStrictEqual({ post: onePost });
     });
@@ -71,12 +94,14 @@ describe("Create Post",()=>{
         
         mockingoose(model).toReturn(postData, 'create');
         mockingoose(model).toReturn(postData, 'save');
-        
+
+        let expectedCacheSize = Object.keys(Cache.data).length + 1;
+
         await controller.createPost(req, res);
 
         expect(res.statusCode).toBe(201);
         expect(res._getJSONData()).toStrictEqual({ message: "Post created successfully" });
-        
+        expect(Object.keys(Cache.data).length).toEqual(expectedCacheSize);
     });
 
     it('should fail to create post without login', async() => {

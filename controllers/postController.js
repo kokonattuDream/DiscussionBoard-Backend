@@ -58,7 +58,6 @@ exports.getAllPosts = async (req, res) => {
       await Promise.all(Object.keys(Cache.data).map(key =>{
         allPosts.push(Cache.get(key));
       }));
-
       allPosts.sort((x,y)=>{
         if(x.updatedDate < y.updatedDate){
           return 1;
@@ -78,10 +77,9 @@ exports.getAllPosts = async (req, res) => {
 
 exports.getPost = async(req, res) => {
     try {
-        let post = null;
-        post = Cache.get(JSON.stringify(req.params.id));
+        let post = Cache.get(JSON.stringify(req.params.id));
     
-        if(!post){
+        if(post){
           res.status(200).json({ post: post });
         } else {
           post = await Post.findOne({_id: req.params.id})
