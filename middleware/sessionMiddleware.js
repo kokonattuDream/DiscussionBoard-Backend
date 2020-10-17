@@ -8,7 +8,7 @@ const sessionMiddleware = session({
     activeDuration: 5 * 60 * 1000,
     store: new FileStore,
     resave: true,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge: 3600000,secure: false, httpOnly: true }
   });
 
