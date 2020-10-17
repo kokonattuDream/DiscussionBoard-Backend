@@ -45,12 +45,12 @@ jobs:
           IMG_API_KEY
           IMG_API_SECRET
           IMG_CLOUD_NAME
-        env:
-          TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
-          DB_URL: ${{ secrets.DB_URL }}
-          IMG_API_KEY: ${{ secrets.IMG_API_KEY }}
-          IMG_API_SECRET: ${{ secrets.IMG_API_SECRET }}
-          IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
+      env:
+        TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+        DB_URL: ${{ secrets.DB_URL }}
+        IMG_API_KEY: ${{ secrets.IMG_API_KEY }}
+        IMG_API_SECRET: ${{ secrets.IMG_API_SECRET }}
+        IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
 
        
 
