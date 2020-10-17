@@ -61,6 +61,7 @@ exports.logoutUser = (req, res) =>{
             console.error(err);
             res.status(500).json({message: 'User log out failed'});
         } else {
+            console.log(req.session);
             res.status(204).json({message: 'User successfully log out'});
         }
     });

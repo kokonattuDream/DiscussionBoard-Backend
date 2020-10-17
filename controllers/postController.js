@@ -42,6 +42,7 @@ exports.createPost = async (req, res) => {
 };
 
 exports.getAllPosts = async (req, res) => {
+  console.log(req.session);
   try {
     let allPosts;
     if(Object.keys(Cache.data).length === 0){
@@ -77,6 +78,7 @@ exports.getAllPosts = async (req, res) => {
 };
 
 exports.getPost = async(req, res) => {
+    console.log(req.session);
     try {
         let post = null;
 
