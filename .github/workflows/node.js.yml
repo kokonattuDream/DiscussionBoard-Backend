@@ -45,6 +45,7 @@ jobs:
         HD_IMG_API_KEY: ${{ secrets.IMG_API_KEY }}
         HD_IMG_API_SECRET: ${{ secrets.IMG_API_SECRET }}
         HD_IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
+        HD_COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
 
        
 
