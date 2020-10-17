@@ -38,19 +38,12 @@ jobs:
         heroku_app_name: "discussion-board-backend"
         heroku_email: ${{secrets.HEROKU_EMAIL}}
         healthcheck: "https://discussion-board-backend.herokuapp.com/posts"
-        usedocker: true
-        docker_build_args: |
-          TEST_DB_URL
-          DB_URL
-          IMG_API_KEY
-          IMG_API_SECRET
-          IMG_CLOUD_NAME
       env:
-        TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
-        DB_URL: ${{ secrets.DB_URL }}
-        IMG_API_KEY: ${{ secrets.IMG_API_KEY }}
-        IMG_API_SECRET: ${{ secrets.IMG_API_SECRET }}
-        IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
+        HD_TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
+        HD_DB_URL: ${{ secrets.DB_URL }}
+        HD_IMG_API_KEY: ${{ secrets.IMG_API_KEY }}
+        HD_IMG_API_SECRET: ${{ secrets.IMG_API_SECRET }}
+        HD_IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
 
        
 
