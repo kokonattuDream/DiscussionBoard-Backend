@@ -10,7 +10,7 @@ userSchema.methods.encryptPassword = (password) => {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
 }
 
-userSchema.methods.checkPassword = function(password){
+userSchema.methods.checkPassword = (password) => {
     return bcrypt.compareSync(password, this.password);
 }
 

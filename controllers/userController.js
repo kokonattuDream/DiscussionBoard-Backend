@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const passwordHelper = require("../lib/passwordHelper");
 
 exports.createUser = async (req, res) => {
     if(!req.body.username || !req.body.password){
@@ -19,9 +20,9 @@ exports.createUser = async (req, res) => {
         }
         let newUser = new User({
             username: req.body.username,
+            password: passwordHelper.encryptPassword(req.body.password)
         });
 
-        newUser.password = newUser.encryptPassword(req.body.password)
 
         await newUser.save();
 
@@ -43,16 +44,17 @@ exports.createUser = async (req, res) => {
 }
 
 exports.loginUser = async (req, res) => {
-    if(!req.body.username || !req.body.password === undefined){
+    if(!req.body.username || !req.body.password){
         return res.status(400).json({error: 'Cannot submit empty fields'});
     }
     try{
         let user = await User.findOne({'username': req.body.username});
+        
         if(!user){
             return res.status(404).json({error: 'Username not found'}); 
         }
 
-        if(!user.checkPassword(req.body.password)){
+        if(!passwordHelper.checkPassword(req.body.password, user.password)){
             return res.status(401).json({error: 'Password is incorrect'});
         }
 
