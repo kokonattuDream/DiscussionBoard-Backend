@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 let testSession;
 
 beforeAll(() =>{
-    app.listen(5000);
     testSession = session(app);
 });
 describe("Register/Log in Feature", () => {
@@ -193,5 +192,6 @@ describe("Non Login users", () =>{
 afterAll(() =>{
     mongoose.connection.collection("users").drop();
     mongoose.connection.collection("posts").drop();
+    mongoose.connection.collection("replies").drop();
     mongoose.connection.close();
 });
