@@ -39,9 +39,14 @@ exports.createPost = async (req, res) => {
 exports.getAllPosts = async (req, res) => {
   try {
     let allPosts;
+
     if(Object.keys(Cache.data).length === 0){
       allPosts = await Post.find()
         .populate("user", "username")
+        .populate({
+          path:'replies',
+          populate: { path: "user", select:"username" }
+        })
         .sort({ updated_date: -1 });
       
       await Promise.all(allPosts.map(post =>{
@@ -74,9 +79,9 @@ exports.getAllPosts = async (req, res) => {
 exports.getPost = async(req, res) => {
     try {
         let post = null;
-
-        post = Cache.get(req.params.id);
-        if(post){
+        post = Cache.get(JSON.stringify(req.params.id));
+    
+        if(!post){
           res.status(200).json({ post: post });
         } else {
           post = await Post.findOne({_id: req.params.id})
@@ -85,7 +90,6 @@ exports.getPost = async(req, res) => {
             path:'replies',
             populate: { path: "user", select:"username" }
           });
-          
           if(!post){
             res.status(404).send("Post not found");
           } else {

@@ -36,12 +36,6 @@ describe("Add Reply",()=>{
 
         await replyController.addReply(req, res);
         expect(res.statusCode).toBe(201);
-
-        let cachePost = Cache.get(replyPayload.post);
-
-        expect(cachePost.replies[0].text).toEqual(replyPayload.reply);
-        expect(cachePost.replies[0].user.username).toEqual(replyPayload.user);
-        Cache.del(replyPayload.post);
     });
      
 });

@@ -5,8 +5,8 @@ const Cache = require("../lib/cache");
 exports.addReply = async (req, res) => {
     try {
       if(req.session.user){
-
-        let post = await Post.findById(req.body.post);
+        let postId = req.body.post;
+        let post = await Post.findById(postId);
         
         let newReply = Reply({
           user: req.session.user._id,
@@ -17,20 +17,16 @@ exports.addReply = async (req, res) => {
         await newReply.save();
         post.replies.push(newReply._id);
         post.updatedDate = newReply.date;
-
-
         await post.save();
         
-        
-        let replyCache = JSON.parse(JSON.stringify(newReply));
-        replyCache.user = {
+        newReply.user = {
           username: req.session.user.username
         }
-        let postCache = Cache.get(req.body.post);
+        let postCache = Cache.get(JSON.stringify(postId));
         if(postCache){
           postCache.updatedDate = post.updatedDate;
-          postCache.replies.push(replyCache);
-          Cache.set(req.body.post, postCache);
+          postCache.replies.push(newReply);
+          Cache.set(postId, postCache);
         }
         
         res.status(201).json({ message: "Reply submitted" });
