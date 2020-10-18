@@ -6,7 +6,7 @@ exports.createPost = async (req, res) => {
     if(req.session.user){
       let data = JSON.parse(req.body.data);
       
-      let newPost = await Post.create({
+      let postModel = await Post.create({
         title: data.title,
         user: req.session.user._id,
         text: data.text,
@@ -17,18 +17,19 @@ exports.createPost = async (req, res) => {
       });
       
       if (req.file) {
-        newPost.imageId = req.file.public_id;
-        newPost.imageUrl = req.file.url;
+        postModel.imageId = req.file.public_id;
+        postModel.imageUrl = req.file.url;
       }
-      await newPost.save();
-      let post = JSON.parse(JSON.stringify(newPost));
+      await postModel.save();
 
-      post.user = {
+      let postWithUsername = JSON.parse(JSON.stringify(postModel));
+
+      postWithUsername.user = {
         username: req.session.user.username
       };
-      console.log(post);
+      console.log(postWithUsername);
       
-      Cache.set(JSON.stringify(post._id), post);
+      Cache.set(JSON.stringify(postWithUsername._id), postWithUsername);
       return res.status(201).json({ message: "Post created successfully" });
     } else {
       return res.status(401).json({ message: "Login Required" });
@@ -42,7 +43,6 @@ exports.createPost = async (req, res) => {
 exports.getAllPosts = async (req, res) => {
   try {
     let allPosts;
-
     if(Object.keys(Cache.data).length === 0){
       allPosts = await Post.find()
         .populate("user", "username")
@@ -81,7 +81,6 @@ exports.getAllPosts = async (req, res) => {
 exports.getPost = async(req, res) => {
     try {
         let post = Cache.get(JSON.stringify(req.params.id));
-    
         if(post){
           return res.status(200).json({ post: post });
         } else {

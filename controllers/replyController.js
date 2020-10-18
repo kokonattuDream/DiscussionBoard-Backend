@@ -6,27 +6,31 @@ exports.addReply = async (req, res) => {
     try {
       if(req.session.user){
         let postId = req.body.post;
-        let post = await Post.findById(postId);
+        let postModel = await Post.findById(postId);
         
-        let newReply = Reply({
+        let replyModel = Reply({
           user: req.session.user._id,
           text: req.body.reply,
           date: new Date()
         });
 
-        await newReply.save();
-        post.replies.push(newReply._id);
-        post.updatedDate = newReply.date;
-        await post.save();
+        await replyModel.save();
+        postModel.replies.push(replyModel._id);
+        postModel.updatedDate = replyModel.date;
+        await postModel.save();
         
-        newReply.user = {
+        let replyWithUsername = JSON.parse(JSON.stringify(replyModel));
+
+        replyWithUsername.user = {
           username: req.session.user.username
         }
+
         let postCache = Cache.get(JSON.stringify(postId));
+        
         if(postCache){
-          postCache.updatedDate = post.updatedDate;
-          postCache.replies.push(newReply);
-          Cache.set(postId, postCache);
+          postCache.updatedDate = postModel.updatedDate;
+          postCache.replies.push(replyWithUsername);
+          Cache.set(JSON.stringify(postId), postCache);
         }
         
         return res.status(201).json({ message: "Reply submitted" });
