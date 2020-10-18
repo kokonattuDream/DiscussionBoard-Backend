@@ -27,7 +27,6 @@ exports.createPost = async (req, res) => {
       postWithUsername.user = {
         username: req.session.user.username
       };
-      console.log(postWithUsername);
       
       Cache.set(JSON.stringify(postWithUsername._id), postWithUsername);
       return res.status(201).json({ message: "Post created successfully" });
