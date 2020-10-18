@@ -21,11 +21,14 @@ exports.createPost = async (req, res) => {
         newPost.imageUrl = req.file.url;
       }
       await newPost.save();
-      newPost.user = {
+      let post = JSON.parse(JSON.stringify(newPost));
+
+      post.user = {
         username: req.session.user.username
       };
+      console.log(post);
       
-      Cache.set(JSON.stringify(newPost._id), newPost);
+      Cache.set(JSON.stringify(post._id), post);
       return res.status(201).json({ message: "Post created successfully" });
     } else {
       return res.status(401).json({ message: "Login Required" });
