@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 const postRoute = require('./routes/postRoute');
 const userRoute = require('./routes/userRoute');
 const replyRoute = require('./routes/replyRoute');
+const healthRoute = require('./routes/healthRoute');
 
 const dbUrl = process.env.NODE_ENV !== "test" ? process.env.DB_URL : process.env.TEST_DB_URL;
 mongoose.connect(dbUrl,{ useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true });
@@ -33,6 +34,7 @@ app.use(sessionMiddleware);
 app.use(userRoute);
 app.use(postRoute);
 app.use(replyRoute);
+app.use(healthRoute);
 
 if(process.env.NODE_ENV !== "test"){
    app.listen(process.env.PORT || 3000);

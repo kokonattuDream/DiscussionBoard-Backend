@@ -7,6 +7,15 @@ let testSession;
 beforeAll(() =>{
     testSession = session(app);
 });
+
+describe("Get health check", () => {
+    it("health check", async() => {
+        let response = await testSession.get('/health');
+        expect(response.statusCode).toBe(200);
+        expect(response.body).toEqual({"message": "Health Check Passed"});
+    });
+});
+
 describe("Register/Log in Feature", () => {
 
     it("Sign Up a new user", async() =>{

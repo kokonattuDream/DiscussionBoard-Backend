@@ -38,7 +38,7 @@ jobs:
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "discussion-board-backend"
         heroku_email: ${{secrets.HEROKU_EMAIL}}
-        healthcheck: "https://discussion-board-backend.herokuapp.com/posts"
+        healthcheck: "https://discussion-board-backend.herokuapp.com/health"
       env:
         HD_TEST_DB_URL: ${{ secrets.TEST_DB_URL }}
         HD_DB_URL: ${{ secrets.DB_URL }}

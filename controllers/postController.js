@@ -26,13 +26,13 @@ exports.createPost = async (req, res) => {
       };
       
       Cache.set(JSON.stringify(newPost._id), newPost);
-      res.status(201).json({ message: "Post created successfully" });
+      return res.status(201).json({ message: "Post created successfully" });
     } else {
-      res.status(401).json({ message: "Login Required" });
+      return res.status(401).json({ message: "Login Required" });
     }
   } catch (err) {
     console.error("Error: " + err);
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 };
 
@@ -68,10 +68,10 @@ exports.getAllPosts = async (req, res) => {
         }
       });
     }
-    res.status(200).json({ posts: allPosts });
+    return res.status(200).json({ posts: allPosts });
   } catch (err) {
     console.error("Error: " + err);
-    res.status(500).send(err);
+    return res.status(500).send(err);
   }
 };
 
@@ -80,7 +80,7 @@ exports.getPost = async(req, res) => {
         let post = Cache.get(JSON.stringify(req.params.id));
     
         if(post){
-          res.status(200).json({ post: post });
+          return res.status(200).json({ post: post });
         } else {
           post = await Post.findOne({_id: req.params.id})
           .populate("user", "username")
@@ -89,14 +89,14 @@ exports.getPost = async(req, res) => {
             populate: { path: "user", select:"username" }
           });
           if(!post){
-            res.status(404).send("Post not found");
+            return res.status(404).send("Post not found");
           } else {
             Cache.set(JSON.stringify(post._id), post);
-            res.status(200).json({ post: post });
+            return res.status(200).json({ post: post });
           }
         }
     } catch (error){
         console.error("Error: " + error);
-        res.status(500).send(error);
+        return res.status(500).send(error);
     }
 }
