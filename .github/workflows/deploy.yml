@@ -47,6 +47,7 @@ jobs:
         HD_IMG_CLOUD_NAME: ${{ secrets.IMG_CLOUD_NAME }}
         HD_COOKIE_SECRET: ${{ secrets.COOKIE_SECRET }}
         HD_FRONT_END_URL: ${{ secrets.FRONT_END_URL }}
+        HD_NODE_ENV: "dev"
 
        
 

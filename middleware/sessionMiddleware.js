@@ -9,7 +9,7 @@ const sessionMiddleware = session({
     store: new FileStore,
     resave: true,
     saveUninitialized: false,
-    cookie: { maxAge: 3600000,secure: false, httpOnly: true }
+    cookie: { maxAge: 3600000, secure: process.env.NODE_ENV === 'dev' ? true : false, httpOnly: true }
   });
 
   module.exports = sessionMiddleware;
