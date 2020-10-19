@@ -13,7 +13,6 @@ exports.addReply = async (req, res) => {
           text: req.body.reply,
           date: new Date()
         });
-        console.log(replyModel);
         await replyModel.save();
         postModel.replies.push(replyModel._id);
         postModel.updatedDate = replyModel.date;
