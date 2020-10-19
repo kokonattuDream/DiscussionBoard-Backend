@@ -20,7 +20,6 @@ exports.addReply = async (req, res) => {
 
         let replyObject = replyModel.toObject();
         replyObject.user = { username: req.session.user.username };
-        console.log(replyObject);
         
         let postCache = Cache.get(JSON.stringify(postId));
         
