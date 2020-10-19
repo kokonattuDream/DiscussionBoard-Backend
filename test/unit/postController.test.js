@@ -44,7 +44,7 @@ describe("Get All Post", ()=>{
         res = httpMock.createResponse();
         await controller.getAllPosts(req, res);
         expect(res.statusCode).toBe(200);
-        expect(res._getJSONData()).toEqual({ posts: allPosts });
+        expect(res._getJSONData()).toStrictEqual({ posts: allPosts });
     });
 });
 
@@ -107,7 +107,6 @@ describe("Create Post",()=>{
         req.session.user = userData;
         req.body.data = payload;
         
-        mockingoose(model).toReturn(postData, 'create');
         mockingoose(model).toReturn(postData, 'save');
 
         let expectedCacheSize = Object.keys(Cache.data).length + 1;
@@ -131,7 +130,6 @@ describe("Create Post",()=>{
             imageId: "4ty4g4wfw",
             imageUrl:"https://somewhere.com/egege"
         }
-        mockingoose(model).toReturn(postData, 'create');
         mockingoose(model).toReturn(postData, 'save');
 
         await controller.createPost(req, res);
