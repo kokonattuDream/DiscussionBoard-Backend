@@ -22,13 +22,11 @@ exports.createPost = async (req, res) => {
       }
       await postModel.save();
 
-      let postWithUsername = JSON.parse(JSON.stringify(postModel));
-
-      postWithUsername.user = {
+      let postObject = postModel.toObject();
+      postObject.user = {
         username: req.session.user.username
       };
-      
-      Cache.set(JSON.stringify(postWithUsername._id), postWithUsername);
+      Cache.set(JSON.stringify(postModel._id), postObject);
       return res.status(201).json({ message: "Post created successfully" });
     } else {
       return res.status(401).json({ message: "Login Required" });
@@ -52,7 +50,7 @@ exports.getAllPosts = async (req, res) => {
         .sort({ updatedDate: -1 });
       
       await Promise.all(allPosts.map(post =>{
-          Cache.set(JSON.stringify(post._id), post);
+          Cache.set(JSON.stringify(post._id), post.toObject());
       }));
     } else {
       allPosts = [];
@@ -61,8 +59,8 @@ exports.getAllPosts = async (req, res) => {
         allPosts.push(Cache.get(key));
       }));
       allPosts.sort((x,y)=>{
-        let dateX = new Date(x.updatedDate);
-        let dateY = new Date(y.updatedDate);
+        let dateX = x.updatedDate;
+        let dateY = y.updatedDate;
         if(dateX < dateY){
           return 1;
         } else if(dateX > dateY){
@@ -94,7 +92,7 @@ exports.getPost = async(req, res) => {
           if(!post){
             return res.status(404).send("Post not found");
           } else {
-            Cache.set(JSON.stringify(post._id), post);
+            Cache.set(JSON.stringify(post._id), post.toObject());
             return res.status(200).json({ post: post });
           }
         }
