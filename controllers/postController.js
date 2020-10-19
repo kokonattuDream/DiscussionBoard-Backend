@@ -49,7 +49,7 @@ exports.getAllPosts = async (req, res) => {
           path:'replies',
           populate: { path: "user", select:"username" }
         })
-        .sort({ updated_date: -1 });
+        .sort({ updatedDate: -1 });
       
       await Promise.all(allPosts.map(post =>{
           Cache.set(JSON.stringify(post._id), post);
@@ -61,9 +61,11 @@ exports.getAllPosts = async (req, res) => {
         allPosts.push(Cache.get(key));
       }));
       allPosts.sort((x,y)=>{
-        if(x.updatedDate < y.updatedDate){
+        let dateX = new Date(x.updatedDate);
+        let dateY = new Date(y.updatedDate);
+        if(dateX < dateY){
           return 1;
-        } else if(x.updatedDate > y.updatedDate){
+        } else if(dateX > dateY){
           return -1;
         } else {
           return 0;

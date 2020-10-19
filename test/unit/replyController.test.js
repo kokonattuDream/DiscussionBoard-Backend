@@ -28,7 +28,7 @@ describe("Add Reply",()=>{
             "username": "adminUser"
         };
         req.body = replyPayload;
-        mockingoose(replyModel).toReturn(savedReply);
+        mockingoose(replyModel).toReturn(savedReply, 'save');
         mockingoose(postModel).toReturn(post, 'findOne');
         mockingoose(postModel).toReturn(savedPost, 'save');
         
