@@ -8,8 +8,7 @@ const sessionMiddleware = session({
     activeDuration: 5 * 60 * 1000,
     store: new FileStore,
     resave: true,
-    saveUninitialized: false,
-    cookie: { maxAge: 3600000, secure: process.env.NODE_ENV === 'dev' ? true : false, httpOnly: true }
+    saveUninitialized: false
   });
 
   module.exports = sessionMiddleware;
