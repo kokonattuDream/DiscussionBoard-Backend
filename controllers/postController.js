@@ -6,7 +6,7 @@ exports.createPost = async (req, res) => {
     if(req.session.user){
       let data = JSON.parse(req.body.data);
       
-      let postModel = await Post.create({
+      let postModel = new Post({
         title: data.title,
         user: req.session.user._id,
         text: data.text,

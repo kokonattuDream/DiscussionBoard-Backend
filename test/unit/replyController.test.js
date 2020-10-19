@@ -25,7 +25,8 @@ beforeEach(() => {
 describe("Add Reply",()=>{
     it("Add a valid reply", async() => {
         req.session.user = {
-            "username": "adminUser"
+            "username": "adminUser",
+            "_id": '507f191e810c19729de860ea'
         };
         req.body = replyPayload;
         mockingoose(replyModel).toReturn(savedReply, 'save');
@@ -40,7 +41,8 @@ describe("Add Reply",()=>{
 
     it("Add a reply: Save Reply Failed", async() => {
         req.session.user = {
-            "username": "adminUser"
+            "username": "adminUser",
+            "_id": '507f191e810c19729de860ea'
         };
         req.body = replyPayload;
         mockingoose(replyModel).toReturn(new Error('Error'), 'save');
@@ -52,7 +54,8 @@ describe("Add Reply",()=>{
 
     it("Add a reply: Find Post Failed", async() => {
         req.session.user = {
-            "username": "adminUser"
+            "username": "adminUser",
+            "_id": '507f191e810c19729de860ea'
         };
         req.body = replyPayload;
         mockingoose(replyModel).toReturn(savedReply);
@@ -65,7 +68,8 @@ describe("Add Reply",()=>{
 
     it("Add a reply: Save Post with New Reply Failed", async() => {
         req.session.user = {
-            "username": "adminUser"
+            "username": "adminUser",
+            "_id": '507f191e810c19729de860ea'
         };
         req.body = replyPayload;
         mockingoose(replyModel).toReturn(savedReply);

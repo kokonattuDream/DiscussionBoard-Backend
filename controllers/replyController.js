@@ -13,22 +13,19 @@ exports.addReply = async (req, res) => {
           text: req.body.reply,
           date: new Date()
         });
-
+        console.log(replyModel);
         await replyModel.save();
         postModel.replies.push(replyModel._id);
         postModel.updatedDate = replyModel.date;
         await postModel.save();
         
         let replyJson = JSON.parse(JSON.stringify(replyModel));
-        replyJson.user = {
-          username: req.session.user.username
-        };
+        replyJson["user"]["username"] = req.session.user.username;
         let postCache = Cache.get(JSON.stringify(postId));
         
         if(postCache){
           postCache.updatedDate = postModel.updatedDate;
           postCache.replies.push(replyJson);
-          console.log(postCache.replies[postCache.replies.length -1]);
           Cache.set(JSON.stringify(postId), postCache);
         }
         
